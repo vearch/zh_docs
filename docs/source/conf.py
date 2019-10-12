@@ -20,7 +20,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'zh_docs'
-copyright = '2019, nizyun'
+copyright = '2019, vearch'
 author = 'vearch'
 
 # The short X.Y version
