@@ -2,6 +2,7 @@
 ==================
 
 xxxxxx 是router服务域名或ip:port
+
 $db_name, $space_name是查询的库表名称
 
 只使用特征查询(size=10指定最多返回10条记录)
