@@ -34,7 +34,7 @@
           }
       }
   }
-  ' http://$IP:8817/space/tpy/_create
+  ' http://xxxxxx/space/tpy/_create
 
 
 查看表空间
