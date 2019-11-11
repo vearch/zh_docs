@@ -3,13 +3,13 @@
 
 .. image:: pic/nbytes.png
    :align: center
-   :scale: 50 %
+   :scale: 100 %
    :alt: Architecture
 
 
 .. image:: pic/nprobe.png
    :align: center
-   :scale: 50 %
+   :scale: 100 %
    :alt: Architecture
 
 
@@ -18,11 +18,11 @@
 
 .. image:: pic/cluster.png
    :align: center
-   :scale: 50 %
+   :scale: 100 %
    :alt: Architecture
 
 
 .. image:: pic/ncentroids.png
    :align: center
-   :scale: 50 %
+   :scale: 100 %
    :alt: Architecture
