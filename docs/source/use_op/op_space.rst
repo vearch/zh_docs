@@ -137,7 +137,7 @@ properties配置:
 
 4、dimension 定义type是vector的字段，指定特征维数大小。
 
-5、store_param 定义存储相关参数，目前支持cache_size即该字段数据占用内存大小，默认是2G，若特征总量超过cache_size大小，则超出的部分存储在磁盘，cache_size值需大于0小于1024*1024，单位M，多个特征字段之间该参数相互不影响。 示例: "store_param": {"cache_size": 2000}，定义该特征字段的存储最多使用2000M内存。
+5、store_param 定义存储相关参数，目前支持cache_size即该字段数据占用内存大小，默认是2G，若特征总量超过cache_size大小，则超出的部分存储在磁盘，cache_size值需大于0小于1024*1024，单位M，多个特征字段之间该参数相互不影响。所有特征字段cache_size总大小不超过机器内存的80%。示例: "store_param": {"cache_size": 2000}，定义该特征字段的存储最多使用2000M内存。
 
 
 查看表空间
