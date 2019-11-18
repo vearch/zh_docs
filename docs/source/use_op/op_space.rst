@@ -119,9 +119,11 @@ properties配置:
 
 1、表空间结构定义字段支持的类型(即type的值)有4种: keyword，integer，float，vector(keyword等价于string)。
 
-2、keyword，integer，float类型的字段支持index、array属性，index定义是否创建索引，array指定是否允许多个值。
+2、keyword类型的字段支持index、array属性，index定义是否创建索引，array指定是否允许多个值。
 
-3、vector 类型字段为特征字段，一个表空间中支持多个特征字段，vector类型的字段支持的属性如下:
+3、integer，float类型的字段支持index属性，index设为true的字段支持使用数值范围过滤查询。
+
+4、vector 类型字段为特征字段，一个表空间中支持多个特征字段，vector类型的字段支持的属性如下:
 
 +-------------+---------------+---------------+----------+----------------------------+
 |字段标识     |字段名称       |类型           |是否必填  |备注                        | 
@@ -135,9 +137,9 @@ properties配置:
 |model_id     |特征插件模型   |string         |否        |使用特征插件服务时指定      |
 +-------------+---------------+---------------+----------+----------------------------+
 
-4、dimension 定义type是vector的字段，指定特征维数大小。
+5、dimension 定义type是vector的字段，指定特征维数大小。
 
-5、store_param 定义存储相关参数，目前支持cache_size即该字段数据占用内存大小，默认是2G，若特征总量超过cache_size大小，则超出的部分存储在磁盘，cache_size值需大于0小于1024*1024，单位M，多个特征字段之间该参数相互不影响。所有特征字段cache_size总大小不超过机器内存的80%。示例: "store_param": {"cache_size": 2000}，定义该特征字段的存储最多使用2000M内存。
+6、store_param 定义该特征字段存储占用内存空间大小，默认大小是engine max_size参数值*特征维数*每个特征值占用空间大小。若store_type设置为RocksDB, 则改值代表RocksDB读缓冲大小。多个特征字段之间该参数相互不影响，所有特征字段cache_size总大小建议不超过机器内存的70%。示例：128维float特征, max_size=1000000, 则cache_size默认值是1000000*128*4B。
 
 
 查看表空间
