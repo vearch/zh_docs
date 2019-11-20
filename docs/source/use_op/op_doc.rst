@@ -109,6 +109,16 @@ json格式的变体，{"index": {"_id": "v1"}} 指定记录的id, {"field1": "va
   }   
   ' http://router_server/$db_name/$space_name/_delete_by_query
 
+根据id批量删除
+::
+
+    curl -H "content-type: application/json" -XPOST -d'
+    {"delete": {"_id": "v1"}}
+    {"delete": {"_id": "v2"}}
+    {"delete": {"_id": "v3"}}
+    ' http://router_server/$db_name/$space_name/_bulk
+
+
 查询详细语法见下文
 
 查询
