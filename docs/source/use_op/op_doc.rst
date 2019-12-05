@@ -236,7 +236,7 @@ json格式的变体，{"index": {"_id": "v1"}} 指定记录的id, {"field1": "va
                }
             ]
 
-(1) filter 条件支持多个，多个条件之间是并的关系。
+(1) filter 条件支持多个，多个条件之间是交的关系。
 
 (2) range 指定使用数值字段integer/float 过滤， filed_name是数值字段名称， gte、lte指定范围， lte 小于等于， gte大于等于，若使用等值过滤，lte和gte设置相同的值。上述示例表示查询field_name字段大于等于160小于等于180区间的值。
 
