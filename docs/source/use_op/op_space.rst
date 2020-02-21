@@ -31,17 +31,17 @@ http://master_server代表master服务，$db_name是创建的库名, $space_name
           },
           "field3": {
               "type": "float",
-                  "index": "true"
+                  "index": true
           },
           "field4": {
               "type": "string",
               "array": true,
-              "index": "true"
+              "index": true
           },
           "field5": {
               "type": "integer",
               "array": false,
-              "index": "true"
+              "index": true
           },
           "field6": {
               "type": "vector",
@@ -139,7 +139,7 @@ properties配置:
 
 5、dimension 定义type是vector的字段，指定特征维数大小。
 
-6、store_param 定义该特征字段存储占用内存空间大小，默认大小是engine max_size参数值*特征维数*每个特征值占用空间大小。若store_type设置为RocksDB, 则改值代表RocksDB读缓冲大小。多个特征字段之间该参数相互不影响，所有特征字段cache_size总大小建议不超过机器内存的70%。示例：128维float特征, max_size=1000000, 则cache_size默认值是1000000*128*4B。
+6、store_param 定义该特征字段存储占用内存空间大小，默认大小是engine max_size参数值*特征维数*每个特征值占用空间大小。若store_type设置为RocksDB, 则该值代表RocksDB读缓冲大小。多个特征字段之间该参数相互不影响，所有特征字段cache_size总大小建议不超过机器内存的70%。示例：128维float特征, max_size=1000000, 则cache_size默认值是1000000*128*4B(显示配置cache_size的值以M为单位，示例:"cache_size":20000, 设置该特征字段最大占用20000M内存)。
 
 
 查看表空间
