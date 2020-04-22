@@ -7,29 +7,38 @@
 
 环境依赖
 
-1. Linux 系统(推荐CentOS 7.2以上)，支持cmake、make 命令
-2. Go版本1.11.2以上
-3. Gcc版本5以上
-4. `Faiss <https://github.com/facebookresearch/faiss>`_
+1. 支持CentOS, Ubuntu and Mac OS。推荐CentOS 7.2以上， 支持cmake、make 命令。
+2. Go版本>=1.11.2。
+3. Gcc版本>=5。
+4. `Faiss <https://github.com/facebookresearch/faiss>`_ 版本>=v1.6.0(不建议使用最新的faiss版本)。
+5. 如果使用RocksDB， 版本6.2.2, 使用RocksDB中INSTALL.md文件的make shared_lib进行编译。
+6. 如果使用GPU, CUDA版本>=9.0
 
 编译
 
+-  进入GOPATH工作目录， ``cd $GOPATH/src`` ``mkdir -p github.com/vearch`` ``cd github.com/vearch``
+
 -  下载源代码: git clone https://github.com/vearch/vearch.git (后续使用$vearch
    代表vearch目录绝对路径)
+
+-  如果使用GPU版本, 修改$vearch/engine/gamma/CMakeLists.txt文件中BUILD_WITH_GPU值为on
+
 -  编译gamma
 
    1. ``cd $vearch/engine/gamma/src``
    2. ``mkdir build && cd build``
    3. ``export Faiss_HOME=faiss安装路径``
    4. ``cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$vearch/ps/engine/gammacb/lib ..``
-   5. ``make && make install``
+   5. 如果使用RocksDB ``export ROCKSDB_HOME=RocksDB安装路径``
+   6. ``make && make install``
 
 -  编译vearch
 
    1. ``cd $vearch``
    2. ``export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$vearch/ps/engine/gammacb/lib/lib``
    3. ``export Faiss_HOME=faiss安装路径``
-   4. ``go build -a --tags=vector -o  vearch``
+   4. 如果使用RocksDB ``export ROCKSDB_HOME=RocksDB安装路径``
+   5. ``go build -a --tags=vector -o  vearch``
    
    生成\ ``vearch``\ 文件表示编译成功
 
@@ -38,7 +47,7 @@
 
 以单机模式为例:
 
--  生成配置文件conf.toml
+-  生成配置文件config.toml(master_server端口使用8817, router_server端口使用9001）
 ::
 
    [global]
@@ -49,12 +58,12 @@
        # log path , If you are in a production environment, You'd better set absolute paths
        log = "logs/"
        # default log type for any model
-       level = "debug"
+       level = "info"
        # master <-> ps <-> router will use this key to send or receive data
        signkey = "vearch"
        skip_auth = true
 
-   # if you are master you'd better set all config for router and ps and router and ps use default config it so cool
+   # if you are master, you'd better set all config for router、ps and router, ps use default config it so cool
    [[masters]]
        # name machine name for cluster
        name = "m1"
@@ -91,8 +100,6 @@
 
 ::
 
-   ./vearch -conf conf.toml
+   ./vearch -conf config.toml
 
-使用示例
---------
 
