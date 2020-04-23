@@ -37,8 +37,8 @@
 -  编译vearch
 
    1. ``cd $vearch``
-   2. ``export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$vearch/ps/engine/gammacb/lib/lib``
-   3. ``export FAISS_HOME=faiss安装路径``
+   2. ``export FAISS_HOME=faiss安装路径``
+   3. ``export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$FAISS_HOME/lib:$vearch/ps/engine/gammacb/lib/lib``
    4. 如果使用RocksDB ``export ROCKSDB_HOME=RocksDB安装路径``
    5. ``go build -a --tags=vector -o  vearch``
    
