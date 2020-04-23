@@ -110,7 +110,7 @@
 
 集群模式:  
 
-- vearch 有三个模块: ``ps``, ``master``, ``router``, run ``./vearch -f config.toml ps/router/master`` 启动相应模块
+- vearch 有三个模块: ``ps``, ``master``, ``router``, run ``./vearch -conf config.toml ps/router/master`` 启动相应模块
 
 假如有5台机器， 2台作为master管理， 2台作为ps计算节点， 1台请求转发
 
