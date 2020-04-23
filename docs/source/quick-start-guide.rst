@@ -21,6 +21,8 @@
 -  下载源代码: git clone https://github.com/vearch/vearch.git (后续使用$vearch
    代表vearch目录绝对路径)
 
+-  下载gamma代码: ``cd $vearch/engine`` ``git clone https://github.com/vearch/gamma.git``
+
 -  如果使用GPU版本, 修改$vearch/engine/gamma/CMakeLists.txt文件中BUILD_WITH_GPU值为on
 
 -  编译gamma
