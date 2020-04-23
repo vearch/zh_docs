@@ -49,7 +49,7 @@
 
 单机模式:
 
--  生成配置文件config.toml(master_server端口使用8817, router_server端口使用9001）
+-  生成配置文件config.toml (toml格式, master_server端口使用8817, router_server端口使用9001）
 ::
 
    [global]
