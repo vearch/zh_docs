@@ -27,9 +27,9 @@
 
 -  编译gamma
 
-   1. ``cd $vearch/engine/gamma/src``
+   1. ``cd $vearch/engine/gamma``
    2. ``mkdir build && cd build``
-   3. ``export Faiss_HOME=faiss安装路径``
+   3. ``export FAISS_HOME=faiss安装路径``
    4. ``cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$vearch/ps/engine/gammacb/lib ..``
    5. 如果使用RocksDB ``export ROCKSDB_HOME=RocksDB安装路径``
    6. ``make && make install``
@@ -38,7 +38,7 @@
 
    1. ``cd $vearch``
    2. ``export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$vearch/ps/engine/gammacb/lib/lib``
-   3. ``export Faiss_HOME=faiss安装路径``
+   3. ``export FAISS_HOME=faiss安装路径``
    4. 如果使用RocksDB ``export ROCKSDB_HOME=RocksDB安装路径``
    5. ``go build -a --tags=vector -o  vearch``
    
