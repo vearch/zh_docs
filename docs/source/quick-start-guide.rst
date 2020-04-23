@@ -18,7 +18,7 @@
 
 -  进入GOPATH工作目录， ``cd $GOPATH/src`` ``mkdir -p github.com/vearch`` ``cd github.com/vearch``
 
--  下载源代码: git clone https://github.com/vearch/vearch.git (后续使用$vearch
+-  下载源代码: ``git clone https://github.com/vearch/vearch.git`` (后续使用$vearch
    代表vearch目录绝对路径)
 
 -  下载gamma代码: ``cd $vearch/engine`` ``git clone https://github.com/vearch/gamma.git``
