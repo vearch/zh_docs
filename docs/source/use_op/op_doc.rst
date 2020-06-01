@@ -275,15 +275,15 @@ json格式的变体，{"index": {"_id": "v1"}} 指定记录的id, _id值为空�
 
 - vector_value 为了减小网络开销，搜索结果中默认不包含特征数据只包含标量信息字段，设置成true指定返回结果中包含原始特征数据。
 
-- client_type leader, random, no_leader, 默认leader仅从主数据节点查询，random: 从ps主从节点随机选择, no_leader:只查询从节点。
+- client_type leader，random，no_leader，默认leader仅从主数据节点查询，random: 从ps主从节点随机选择，no_leader:只查询从节点。
 
-- parallel 设置为true适合批量查询, 默认false.
+- parallel 设置为true适合批量查询，默认false。
 
-- l2_sqrt default FALSE, don't do sqrt; TRUE, do sqrt. 
+- l2_sqrt default false， don't do sqrt; TRUE, do sqrt。 
 
-- ivf_flat 仅适用与IVFPQ模型, 默认false, 设置为true, 使用ivf_flat替换ivfpq。
+- ivf_flat 仅适用与IVFPQ模型，默认false，设置为true，使用ivf_flat替换ivfpq。
 
-- nprobe 指定搜索聚类中心数量,适用与IVFPQ和GPU模型,默认20
+- nprobe 指定搜索聚类中心数量，适用与IVFPQ和GPU模型，默认20
 
 - size 指定最多返回的结果数量。若请求url中设置了size值http://router_server/$db_name/$space_name/_search?size=20优先使用url中指定的size值。
 
