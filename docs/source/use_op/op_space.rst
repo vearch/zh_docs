@@ -107,9 +107,9 @@ engine配置:
 
 2、index_size 指定每个分片的记录数量达到多少开始创建索引，不指定则不创建索引。
 
-3、max_size  指定每个分片最多存储的记录数量，防止服务器内存占用过多。
+3、max_size 指定每个分片最多存储的记录数量，防止服务器内存占用过多。
 
-4、id_type    指定在索引中搜索的桶的数量，不能大于ncentroids的值。
+4、id_type 指定唯一记录主键类型，支持String和Long(定义为Long可节省内存占用)。 
 
 5、retrieval_type 检索模型，目前支持五种类型，IVFPQ，GPU，BINARYIVF， HNSW，FLAT, 不同的检索模型需要的参数配置及默认值如下:
 
