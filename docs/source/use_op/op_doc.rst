@@ -265,7 +265,7 @@ json格式的变体，{"index": {"_id": "v1"}} 指定记录的id, _id值为空�
 
 (2) range 指定使用数值字段integer/float 过滤， filed_name是数值字段名称， gte、lte指定范围， lte 小于等于， gte大于等于，若使用等值过滤，lte和gte设置相同的值。上述示例表示查询field_name字段大于等于160小于等于180区间的值。
 
-(3) term 使用标签过滤， field_name是定义的标签字段，允许使用多个值过滤，可以求交“operator”: “or” , 求并: “operator”: “and”，上述示例表示查询field_name字段值是”100”、”200” 或”300”的值。
+(3) term 使用标签过滤， field_name是定义的标签字段，允许使用多个值过滤，可以求并“operator”: “or” , 求交: “operator”: “and”，上述示例表示查询field_name字段值是”100”、”200” 或”300”的值。
 
 - direct_search_type 指定查询类型，0代表若特征已经创建索引则使用索引，若没有创建则暴力搜索； -1 代表只使用索引进行搜索， 1代表不使用索引只进行暴力搜索。默认值是0。
 
