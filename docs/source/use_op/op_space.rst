@@ -17,10 +17,13 @@ http://master_server代表master服务，$db_name是创建的库名, $space_name
           "name": "gamma",
           "index_size": 70000,
           "max_size": 10000000,
-          "nprobe": 10,
-          "metric_type": "InnerProduct",
-          "ncentroids": 256,
-          "nsubvector": 32
+          "id_type": "String",
+          "retrieval_type": "IVFPQ",
+          "retrieval_param": {
+              "metric_type": "InnerProduct",
+              "ncentroids": 256,
+              "nsubvector": 32 
+          }
       },
       "properties": {
           "field1": {
