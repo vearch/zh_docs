@@ -10,7 +10,7 @@
 1. 支持CentOS, Ubuntu and Mac OS。推荐CentOS 7.2以上， 检查安装cmake、make工具。
 2. Go版本>=1.11.2。
 3. Gcc版本>=5。
-4. `Faiss <https://github.com/facebookresearch/faiss>`_ 版本>=v1.6.0(不建议使用最新的faiss版本)。
+4. `Faiss <https://github.com/facebookresearch/faiss>`_ master分支(commit:833d417db1b6b6fd4b19e092f735373f07eab33f)。 
 5. 如果使用RocksDB， 版本6.2.2, 使用RocksDB中INSTALL.md文件的make shared_lib进行编译。
 6. 如果使用GPU, CUDA版本>=9.0
 
