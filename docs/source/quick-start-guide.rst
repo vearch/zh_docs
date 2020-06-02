@@ -21,13 +21,13 @@
 -  下载源代码: ``git clone https://github.com/vearch/vearch.git`` (后续使用$vearch
    代表vearch目录绝对路径)
 
--  下载gamma代码: ``cd $vearch/engine`` ``git clone https://github.com/vearch/gamma.git``
+-  下载gamma代码: ``cd vearch`` ``git submodule init``  ``git sumodule update``
 
--  如果使用GPU版本, 修改$vearch/engine/gamma/CMakeLists.txt文件中BUILD_WITH_GPU值为on
+-  如果使用GPU版本, 修改$vearch/engine/CMakeLists.txt文件中BUILD_WITH_GPU值为on
 
 -  编译gamma
 
-   1. ``cd $vearch/engine/gamma``
+   1. ``cd $vearch/engine``
    2. ``mkdir build && cd build``
    3. ``export FAISS_HOME=faiss安装路径``
    4. 如果使用RocksDB ``export ROCKSDB_HOME=RocksDB安装路径``
