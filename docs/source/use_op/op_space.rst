@@ -110,7 +110,7 @@ engine配置:
 
 4、id_type 指定唯一记录主键类型，支持String和Long(定义为Long可节省内存占用)。 
 
-5、retrieval_type 检索模型，目前支持五种类型，IVFPQ，GPU，BINARYIVF， HNSW，FLAT, 不同的检索模型需要的参数配置及默认值如下:
+5、retrieval_type 检索模型，目前支持五种类型，IVFPQ，GPU，BINARYIVF， HNSW，FLAT, IVFFLAT 不同的检索模型需要的参数配置及默认值如下:
 
 IVFPQ:
 
