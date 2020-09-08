@@ -208,9 +208,15 @@ properties配置:
 
 5、dimension 定义type是vector的字段，指定特征维数大小。
 
-6、store_param 针对不同store_type的存储参数，其包含以下两个子参数。
+6、store_type 特征向量存储类型，有以下三个选项：
 
-cache_size: 数值类型，单位时M bytes，默认1024。store_type="RocksDB"时，它表示RocksDB的读缓冲大小，值越大读向量的性能越好，一般设置1024、2048、4096和6144即可；store_type="Mmap"时，它表示写缓冲的大小，不用太大，一般512、1024或2048即可；store_type="MemoryOnly"，它没有用。
+"MemoryOnly"：原始向量都存储在内存中，存储数量的多少受内存限制，适用于数据量不大（千万级），对性能要求高的场景
+"RocksDB"：原始向量存储在RockDB（磁盘）中，存储数量受磁盘大小限制，适用单机数据量巨大（亿级以上），对性能要求不高的场景
+"Mmap"：原始向量存储在磁盘文件中，存储数量受磁盘大小限制，适用单机数据量巨大（亿级以上），对性能要求不高的场景
+
+7、store_param 针对不同store_type的存储参数，其包含以下两个子参数。
+
+cache_size: 数值类型，单位是M bytes，默认1024。store_type="RocksDB"时，它表示RocksDB的读缓冲大小，值越大读向量的性能越好，一般设置1024、2048、4096和6144即可；store_type="Mmap"时，它表示写缓冲的大小，不用太大，一般512、1024或2048即可；store_type="MemoryOnly"，它没有用。
 
 compress: bool类型，默认false。true表示对原始向量进行压缩，一般会将原始向量压缩为原来的50%，可以节省内存和磁盘；false表示不压缩。
 
