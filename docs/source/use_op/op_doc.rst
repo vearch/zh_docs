@@ -284,9 +284,51 @@ id查询
 ::
 
   curl -XGET http://router_server/$db_name/$space_name/$id
- 
+  
+批量id查询
+--------
+::
+  
+  curl -H "content-type: application/json" -XPOST -d'
+  {
+      "query": {
+	        "ids": ["id1", "id2"],
+	        "fields": ["field1"]
+      }
+  }
+  ' http://router_server/$db_name/$space_name/_query_byids
 
-批量查询
+
+ids指定多个id， fields 指定返回每条记录中那些字段
+
+
+批量特征查询1
+--------
+::
+ 
+  curl -H "content-type: application/json" -XPOST -d'
+  [{
+     "query": {
+         "sum": [{
+             "field": "vector_field_name",
+             "feature": [0.1, 0.2]
+         }]
+     }
+  },
+  {
+     "query": {
+         "sum": [{
+             "field": "vector_field_name",
+             "feature": [0.1, 0.2]
+         }]
+      }
+  }]
+  ' http://router_server/$db_name/$space_name/_bulk_search
+ 
+把多个单条查询的参数拼接成数组作为请求参数，返回结果和请求顺序保持一致。
+
+
+批量特征查询2
 --------
 ::
 
@@ -301,7 +343,23 @@ id查询
   }
   ' http://router_server/$db_name/$space_name/_msearch
 
-批量查询和单条查询的区别在于将批量的特征按顺序拼接成一个特征数组，后台服务会按照定义表空间结构时特征维数进行拆分。比如定义10维的特征字段，批量50条进行查询，将特征按顺序拼接成500维的数组赋值给feature参数。请求后缀使用_msearch。
+适用于多个查询使用相同过滤条件的情况，将多个查询的特征拼接成一个特征数组（比如定义128维的特征，批量查询10条，则将10个128维特征按顺序拼接成1280维特征数组赋值给feature字段），后台接收到请求后按表结构定义的特征字段维度进行拆分，按顺序返回匹配结果。
+
+
+根据id特征查询
+--------
+::
+
+  curl -H "content-type: application/json" -XPOST -d'
+  {
+      "query": {
+          "ids": ["id1", "id2"]
+       },
+       "size": 10
+  }
+  ' http://router_server/$db_name/$space_name/_query_byids_feature
+   
+传入记录id， 首先查询出该记录的特征，然后再用特征进行查询，返回匹配结果。
 
 
 多向量查询
