@@ -49,4 +49,4 @@ http://master_server代表master服务
   }
   ' http://master_server/partition/change_member
 
-method=0 add partition:1 to node:1; method=1 delete partition:1 from node:1
+method=0: node id 1上添加分片id 1 的副本; method=1: 删除 node id 1 上 分片 id 1 的副本。
