@@ -17,6 +17,8 @@ http://master_server代表master服务
 ::
 
   curl -XGET http://master_server/_cluster/health
+  
+查看集群状态及库、表记录数据量(doc_num)。
 
 
 端口状态
