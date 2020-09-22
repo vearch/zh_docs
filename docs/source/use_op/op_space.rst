@@ -53,7 +53,7 @@ http://master_server代表master服务，$db_name是创建的库名, $space_name
               "format": "normalization",
               "store_type": "RocksDB",
               "store_param": {
-                  "store_param": 2048,
+                  "cache_size": 2048,
                   "compress": false
               }
           }
