@@ -302,9 +302,9 @@ FLAT:
 
 (1) filter 条件支持多个，多个条件之间是交的关系。
 
-(2) range 指定使用数值字段integer/float 过滤， filed_name是数值字段名称， gte、lte指定范围， lte 小于等于， gte大于等于，若使用等值过滤，lte和gte设置相同的值。上述示例表示查询field_name字段大于等于160小于等于180区间的值。
+(2) range 指定使用数值字段integer、long、float、double 过滤， filed_name是数值字段名称， gte、lte指定范围， lte 小于等于， gte大于等于，若使用等值过滤，lte和gte设置相同的值。上述示例表示查询field_name字段大于等于160小于等于180区间的值。
 
-(3) term 使用标签过滤， field1是定义的标签字段，允许使用多个值过滤，可以求并“operator”: “or” , 求交: “operator”: “and”，不包含: "operator": "not"。
+(3) term 使用标签过滤（string字段）， field1是定义的标签字段名，允许使用多个值过滤，可以求并“operator”: “or” , 求交: “operator”: “and”，不包含: "operator": "not"。
 
 - is_brute_search 0代表若特征已经创建索引则使用索引，否则暴力搜索； -1 代表只使用索引进行搜索， 1代表不使用索引只进行暴力搜索。默认值0。
 
