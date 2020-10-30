@@ -251,11 +251,11 @@ BINARYIVF:
 
 properties配置:
 
-1、表空间结构定义字段支持的类型(即type的值)有6种: keyword，integer， long， float，double， vector(keyword等价于string)。
+1、表空间结构定义字段支持的类型(即type的值)有6种: string(keyword)，integer， long， float，double， vector。
 
-2、keyword类型的字段支持index、array属性，index定义是否创建索引，array指定是否允许多个值。
+2、string类型的字段支持index、array属性，index定义是否创建索引，array指定是否允许多个值，创建索引后支持term过滤。
 
-3、integer，float类型的字段支持index属性，index设为true的字段支持使用数值范围过滤查询。
+3、integer，long，float，double类型的字段支持index属性，index设为true创建索引后支持数值范围过滤查询(range)。
 
 4、vector 类型字段为特征字段，一个表空间中支持多个特征字段，vector类型的字段支持的属性如下:
 
