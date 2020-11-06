@@ -393,13 +393,14 @@ ids指定多个id， fields 指定返回每条记录中那些字段
   curl -H "content-type: application/json" -XPOST -d'
   {
       "query": {
+          "sum":[{"field": "field_name", "feature": []}],
           "ids": ["id1", "id2"]
        },
        "size": 10
   }
   ' http://router_server/$db_name/$space_name/_query_byids_feature
    
-传入记录id， 首先查询出该记录的特征，然后再用特征进行查询，返回匹配结果。
+sum条件中field_name指定特征字段名称，feature设为空， ids传入唯一记录id，后台处理首先根据唯一id查询出该记录的特征，然后再用特征进行相似查询，返回匹配结果。
 
 
 多向量查询
