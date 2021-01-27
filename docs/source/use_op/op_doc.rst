@@ -306,7 +306,7 @@ FLAT:
 
 (3) term 使用标签过滤（string字段）， field1是定义的标签字段名，允许使用多个值过滤，可以求并“operator”: “or” , 求交: “operator”: “and”，不包含: "operator": "not"。
 
-- is_brute_search 0代表若特征已经创建索引则使用索引，否则暴力搜索； -1 代表只使用索引进行搜索， 1代表不使用索引只进行暴力搜索。默认值0。
+- is_brute_search  0使用索引搜索（建完索引前查询结果为空）， 1使用暴力搜索，默认值0。
 
 - online_log_level 设置成”debug” 可以指定在服务端打印更加详细的日志，开发测试阶段方便排查问题。
 
