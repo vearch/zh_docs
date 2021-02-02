@@ -285,9 +285,9 @@ properties配置:
 
 7、store_param 针对不同store_type的存储参数，其包含以下两个子参数。
 
-cache_size: 数值类型，单位是M bytes，默认1024。store_type="RocksDB"时，它表示RocksDB的读缓冲大小，值越大读向量的性能越好，一般设置1024、2048、4096和6144即可；store_type="Mmap"时，它表示写缓冲的大小，不用太大，一般512、1024或2048即可；store_type="MemoryOnly"，它没有用。
+cache_size: 数值类型，单位是M bytes，默认1024。store_type="RocksDB"时，表示RocksDB的读缓冲大小，值越大读向量的性能越好，一般设置1024、2048、4096和6144即可；store_type="Mmap"时，表示写缓冲的大小，不用太大，一般512、1024或2048即可；store_type="MemoryOnly"，cache_size不生效。
 
-compress: 设置为{"rate":16} 压缩50%； 默认不压缩；目前支持RocksDB和MemoryOnly， Mmap暂不支持。
+compress: 设置为{"rate":16} 压缩50%； 默认不压缩；支持RocksDB和MemoryOnly， Mmap暂不支持。
 
 
 查看表空间
