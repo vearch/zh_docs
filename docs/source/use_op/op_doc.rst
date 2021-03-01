@@ -288,11 +288,15 @@ FLAT:
                    "term": {
                        "field1": ["100", "200", "300"],
                        "operator": "or"
-                   },
+                   }
+	       },
+	       {
                    "term": {
                        "field2": ["a", "b", "c"],
                        "operator": "and"
-                   },
+                   }
+	       },
+	       {
                    "term": {
                        "field3": ["A1", "B2"],
                        "operator": "not"
