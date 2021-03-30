@@ -307,7 +307,7 @@ compress: 设置为{"rate":16} 压缩50%； 默认不压缩。
 ::
    
   curl -XPUT -H "content-type: application/json" -d'
-  {
+  [
       "cache_info": [
           {
               "name": "table",
@@ -322,7 +322,7 @@ compress: 设置为{"rate":16} 压缩50%； 默认不压缩。
               "cache_size": 1024,         
           }
       ]
-  }
+  ]
   ' http://master_server/$db_name/$space_name/set_config
 
 1、table cache size：表示所有定长的标量字段（integer，long，float，double）使用cache的大小，默认为512M，单位为M bytes。
