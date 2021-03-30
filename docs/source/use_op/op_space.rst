@@ -281,13 +281,13 @@ properties配置:
 
 "RocksDB"：原始向量存储在RockDB（磁盘）中，存储数量受磁盘大小限制，适用单机数据量巨大（亿级以上），对性能要求不高的场景
 
-"Mmap"：原始向量存储在磁盘文件中，存储数量受磁盘大小限制，适用单机数据量巨大（亿级以上），对性能要求不高的场景
+"Mmap"：原始向量存储在磁盘文件中，使用cache提高性能，存储数量受磁盘大小限制，适用单机数据量巨大（亿级以上），对性能要求不高的场景
 
 7、store_param 针对不同store_type的存储参数，其包含以下两个子参数。
 
-cache_size: 数值类型，单位是M bytes，默认1024。store_type="RocksDB"时，表示RocksDB的读缓冲大小，值越大读向量的性能越好，一般设置1024、2048、4096和6144即可；store_type="Mmap"时，表示写缓冲的大小，不用太大，一般512、1024或2048即可；store_type="MemoryOnly"，cache_size不生效。
+cache_size: 数值类型，单位是M bytes，默认1024。store_type="RocksDB"时，表示RocksDB的读缓冲大小，值越大读向量的性能越好，一般设置1024、2048、4096和6144即可；store_type="Mmap"时，表示读缓冲的大小，一般512、1024、2048和4096即可，可根据实际应用场景设置大小；store_type="MemoryOnly"，cache_size不生效。
 
-compress: 设置为{"rate":16} 压缩50%； 默认不压缩；支持RocksDB和MemoryOnly， Mmap暂不支持。
+compress: 设置为{"rate":16} 压缩50%； 默认不压缩。
 
 
 查看表空间
@@ -302,4 +302,31 @@ compress: 设置为{"rate":16} 压缩50%； 默认不压缩；支持RocksDB和Me
 ::
  
   curl -XDELETE http://master_server/space/$db_name/$space_name
+修改cache大小
+--------
+::
+   
+  curl -XPUT -H "content-type: application/json" -d'
+  {
+      "cache_info": [
+          {
+              "name": "table",
+              "cache_size": 1024,         
+          },
+          {
+              "name": "string",
+              "cache_size": 1024,         
+          },
+          {
+              "name": "field7",
+              "cache_size": 1024,         
+          }
+      ]
+  }
+  ' http://master_server/$db_name/$space_name/set_config
 
+1、table cache size：表示所有定长的标量字段（integer，long，float，double）使用cache的大小，默认为512M，单位为M bytes。
+
+2、string cache size：表示所有变长的标量字段（string）使用cache的大小，默认为512M，单位为M bytes。
+
+3、对于向量字段只支持store_type为Mmap的进行修改cache size。
