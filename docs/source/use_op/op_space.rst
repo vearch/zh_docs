@@ -324,7 +324,9 @@ compress: 设置为{"rate":16} 压缩50%； 默认不压缩。
       ]
   }
   ' http://master_server/$db_name/$space_name/set_config
-1、table cache size：表示定长的标量字段（integer，long，float，double）使用cache的大小，默认为512M，单位为M bytes。
-2、string cache size：表示变成的标量字段（string）使用cache的大小，默认为512M，单位为M bytes。
+
+1、table cache size：表示所有定长的标量字段（integer，long，float，double）使用cache的大小，默认为512M，单位为M bytes。
+
+2、string cache size：表示所有变长的标量字段（string）使用cache的大小，默认为512M，单位为M bytes。
+
 3、对于向量字段只支持store_type为Mmap的进行修改cache size。
-  
