@@ -302,13 +302,15 @@ compress: 设置为{"rate":16} 压缩50%； 默认不压缩。
 ::
  
   curl -XDELETE http://master_server/space/$db_name/$space_name
+
+
 修改cache大小
 --------
 ::
    
-  curl -XPUT -H "content-type: application/json" -d'
+  curl -H "content-type: application/json" -XPOST -d'
   {
-      "cache_info": [
+      "cache_models": [
           {
               "name": "table",
               "cache_size": 1024,         
@@ -323,10 +325,18 @@ compress: 设置为{"rate":16} 压缩50%； 默认不压缩。
           }
       ]
   }
-  ' http://master_server/$db_name/$space_name/set_config
+  ' http://master_server/config/$db_name/$space_name
 
 1、table cache size：表示所有定长的标量字段（integer，long，float，double）使用cache的大小，默认为512M，单位为M bytes。
 
 2、string cache size：表示所有变长的标量字段（string）使用cache的大小，默认为512M，单位为M bytes。
 
 3、对于向量字段只支持store_type为Mmap的进行修改cache size。
+
+
+查看cache大小
+--------
+::
+  
+  curl -XGET http://master_server/config/$db_name/$space_name
+1、对于向量字段只支持store_type为Mmap的查看cache size。
