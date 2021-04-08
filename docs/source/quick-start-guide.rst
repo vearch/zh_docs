@@ -7,40 +7,31 @@
 
 环境依赖
 
-1. 支持CentOS, Ubuntu and Mac OS。推荐CentOS 7.2以上， 检查安装cmake、make工具。
-2. Go版本>=1.11.2。
-3. Gcc版本>=5。
-4. `Faiss <https://github.com/facebookresearch/faiss>`_ master分支(commit:833d417db1b6b6fd4b19e092f735373f07eab33f)。 
-5. 如果使用RocksDB， 版本6.2.2, 使用RocksDB中INSTALL.md文件的make shared_lib进行编译。
-6. 如果使用GPU, CUDA版本>=9.0
+1. CentOS、ubuntu和Mac OS都支持（推荐CentOS >= 7.2）
+2. go >= 1.11.2
+3. gcc >= 5
+4. cmake >= 3.17 
+5. OpenBLAS
+6. tbb，CentOS可使用yum安装，如：yum install tbb-devel.x86_64
+7. [RocksDB](https://github.com/facebook/rocksdb) == 6.2.2 （可选），你不需要手动安装，脚本自动安装。但是你需要手动安装rocksdb的依赖。请参考如下安装方法：https://github.com/facebook/rocksdb/blob/master/INSTALL.md
+8. [zfp](https://github.com/LLNL/zfp) == v0.5.5 (可选)，你不需要手动安装，脚本自动安装。
+9. CUDA >= 9.0，如果你不使用GPU模型，可忽略。
 
 编译
 
--  进入GOPATH工作目录， ``cd $GOPATH/src`` ``mkdir -p github.com/vearch`` ``cd github.com/vearch``
+-  进入 `GOPATH` 目录, `cd $GOPATH/src` `mkdir -p github.com/vearch` `cd github.com/vearch`
 
 -  下载源代码: ``git clone https://github.com/vearch/vearch.git`` (后续使用$vearch
    代表vearch目录绝对路径)
 
 -  下载gamma代码: ``cd vearch`` ``git submodule update --init --recursive``
 
--  如果使用GPU版本, 修改$vearch/engine/CMakeLists.txt文件中BUILD_WITH_GPU值为on
+-  如果使用GPU版本, 修改$vearch/engine/CMakeLists.txt文件中BUILD_WITH_GPU变为on
 
--  编译gamma
+-  编译vearch和gamma
 
-   1. ``cd $vearch/engine``
-   2. ``mkdir build && cd build``
-   3. ``export FAISS_HOME=faiss安装路径``
-   4. 如果使用RocksDB ``export ROCKSDB_HOME=RocksDB安装路径``
-   5. ``cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$vearch/ps/engine/gammacb/lib ..``
-   6. ``make -j && make install``
-
--  编译vearch
-
-   1. ``cd $vearch``
-   2. ``export FAISS_HOME=faiss安装路径``
-   3. 如果使用RocksDB ``export ROCKSDB_HOME=RocksDB安装路径``
-   4. ``export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$FAISS_HOME/lib:$ROCKSDB_HOME:$ROCKSDB_HOME/lib:$vearch/ps/engine/gammacb/lib/lib`` 
-   5. ``go build -a --tags=vector -o  vearch``
+   1. ``cd build``
+   2. ``sh build.sh``
    
    生成\ ``vearch``\ 文件表示编译成功
 
@@ -100,11 +91,11 @@
 
 -  启动
 
-启动vearch前，需要设置LD_LIBRARY_PATH环境变量的值，添加faiss, gamma, rocksdb等依赖的lib包(比如$vearch/ps/engine/gammacb/lib/lib、$FAISS_HOME/lib等目录下的lib包; 执行ldd vearch 和 ldd $vearch/ps/engine/gammacb/lib/lib/libgamma.so.0.1 命令可以查看vearch和gamma依赖的包)。
+启动vearch前，需要设置LD_LIBRARY_PATH环境变量的值，添加gamma, rocksdb, zfp等依赖的lib包; 执行ldd vearch 和 ldd $vearch/ps/engine/gammacb/lib/lib/libgamma.so.0.1 命令可以查看vearch和gamma依赖的包)。
 
 ::
 
-   ./vearch -conf config.toml
+   ./vearch -conf conf.toml all
 
 
 
@@ -112,7 +103,7 @@
 
 - vearch 有三个模块: ``ps``, ``master``, ``router``, run ``./vearch -conf config.toml ps/router/master`` 启动相应模块
 
-假如有5台机器， 2台作为master管理， 2台作为ps计算节点， 1台请求转发
+假如有5台机器， 2台作为master管理， 2台作为ps计算节点， 1台router请求转发
 
 -  master
 
