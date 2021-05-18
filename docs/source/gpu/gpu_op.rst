@@ -15,7 +15,7 @@ GPU使用
 
 5. 数据插入和建索引时不支持搜索。
 
-6. 数据不自动创建索引，调用curl -XPOST http://router_server/$db_name/$space_name/_forcemerge创建索引. 
+6. 数据不自动创建索引，调用curl -XPOST http://router_server/$db_name/$space_name/_forcemerge创建索引。
 
-7. 不支持实时添加数据到索引，新增数据只有重建索引后才会生效。(重建索引:curl -XPOST http://router_server/$db_name/$space_name/_forcemerge)
+7. 不支持实时添加数据到GPU索引，新增数据只有更新索引后才会生效。(更新索引:curl -XPOST http://router_server/$db_name/$space_name/_forcemerge)。
 
