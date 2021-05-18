@@ -289,6 +289,9 @@ cache_size: 数值类型，单位是M bytes，默认1024。store_type="RocksDB"�
 
 compress: 设置为{"rate":16} 压缩50%； 默认不压缩。
 
+标量索引
+
+Gamma引擎支持标量索引，提供对标量数据的过滤功能，开启方式参考“properties配置”中的第2条和第3条，检索方式参考“查询”中的“filter json结构说明“
 
 查看表空间
 --------
