@@ -236,7 +236,7 @@ SCANN（针对SCANN编译版本）:
       "thread_num": 8
   }
 
-  注意: 1、目前scann模型，索引不支持dump/load。
+  注意: 1、目前scann模型，索引不支持dump/load；不支持update。
 
 IVFFLAT:
 
