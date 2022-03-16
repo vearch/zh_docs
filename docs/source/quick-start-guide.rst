@@ -9,13 +9,14 @@
 
 1. CentOS、ubuntu和Mac OS都支持（推荐CentOS >= 7.2）
 2. go >= 1.11.2
-3. gcc >= 5
+3. gcc >= 5（使用scann模型时，gcc >= 9）
 4. cmake >= 3.17 
 5. OpenBLAS
 6. tbb，CentOS可使用yum安装，如：yum install tbb-devel.x86_64
 7. [RocksDB](https://github.com/facebook/rocksdb) == 6.2.2 （可选），你不需要手动安装，脚本自动安装。但是你需要手动安装rocksdb的依赖。请参考如下安装方法：https://github.com/facebook/rocksdb/blob/master/INSTALL.md
 8. [zfp](https://github.com/LLNL/zfp) == v0.5.5 (可选)，你不需要手动安装，脚本自动安装。
 9. CUDA >= 9.0，如果你不使用GPU模型，可忽略。
+10. clang >= 8.0，bazel, python >= 3.7,如果你不使用scann模型，可忽略。
 
 编译
 
@@ -27,6 +28,8 @@
 -  下载gamma代码: ``cd vearch`` ``git submodule update --init --recursive``
 
 -  如果使用GPU版本, 修改$vearch/engine/CMakeLists.txt文件中BUILD_WITH_GPU变为on
+
+-  如果使用SCANN模型, 修改$vearch/engine/CMakeLists.txt文件中BUILD_WITH_SCANN变为on
 
 -  编译vearch和gamma
 
