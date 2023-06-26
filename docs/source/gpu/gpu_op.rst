@@ -5,7 +5,7 @@ GPU使用
 注意事项
 -----------------------
 
-1. 编译环境需要带GPU安装GUDA>=9.0.
+1. 编译环境需要带GPU安装CUDA>=9.0.
 
 2. 编译前Vearch引擎CMakeLists.txt配置中BUILD_WITH_GPU设置为on.
 
