@@ -143,7 +143,6 @@ json格式的变体，{"index": {"_id": "v1"}} 指定记录的id, _id值为空�
       "vector_value": false,
       "client_type": "leader",
       "l2_sqrt": false,
-      "sort": [{"field1":{"order": "asc"}}],
       "size": 10
   }  
   ' http://router_server/$db_name/$space_name/_search
@@ -165,7 +164,6 @@ json格式的变体，{"index": {"_id": "v1"}} 指定记录的id, _id值为空�
       "vector_value": false,
       "client_type": "leader",
       "l2_sqrt": false,
-      "sort": [{"field1":{"order": "asc"}}],
       "size": 10
   }
 
