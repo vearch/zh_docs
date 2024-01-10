@@ -53,8 +53,7 @@ http://master_server代表master服务，$db_name是创建的库名, $space_name
               "format": "normalization",
               "store_type": "RocksDB",
               "store_param": {
-                  "cache_size": 2048,
-                  "compress": {"rate":16}
+                  "cache_size": 2048
               }
           }
       }
@@ -156,9 +155,6 @@ index_size：对于IVFPQ，在建立索引之前需要训练，因此您应该�
           "nlinks": 32,
           "efConstruction": 200,
           "efSearch": 64
-      },
-      "opq": {
-          "nsubvector": 64
       }
   }
 
