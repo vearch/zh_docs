@@ -128,7 +128,8 @@ document_id可以是指定分区的[0, max_docid]，max_docid和分区信息可�
         "space_name": "ts_space",
         "query": {
             "document_ids": ["6560995651113580768", "-5621139761924822824", "-104688682735192253"]
-        }
+        }，
+        "vector_value": true
     }
     ' http://router_server/document/query
 
@@ -146,7 +147,8 @@ document_id可以是指定分区的[0, max_docid]，max_docid和分区信息可�
             "10002"
             ],
             "partition_id": "1"
-        }
+        }，
+        "vector_value": true
     }
     ' http://router_server/document/query
 
@@ -175,7 +177,8 @@ document_id可以是指定分区的[0, max_docid]，max_docid和分区信息可�
                 }
             }
             ]
-        }
+        }，
+        "vector_value": false
     }
     ' http://router_server/document/query
 
