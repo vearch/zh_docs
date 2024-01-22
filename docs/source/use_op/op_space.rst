@@ -12,9 +12,8 @@ http://master_server代表master服务，$db_name是创建的库名, $space_name
   {
       "name": "space1",
       "partition_num": 1,
-      "replica_num": 1,
+      "replica_num": 3,
       "engine": {
-          "name": "gamma",
           "index_size": 70000,
           "id_type": "String",
           "retrieval_type": "IVFPQ",
