@@ -137,16 +137,16 @@ document_id可以是指定分区的[0, max_docid]，max_docid和分区信息可�
 
     curl -H "content-type: application/json" -XPOST -d'
     {
-    "db_name": "ts_db",
-    "space_name": "ts_space",
-    "query": {
-        "document_ids": [
-        "10000",
-        "10001",
-        "10002"
-        ],
-        "partition_id": "1"
-    }
+        "db_name": "ts_db",
+        "space_name": "ts_space",
+        "query": {
+            "document_ids": [
+            "10000",
+            "10001",
+            "10002"
+            ],
+            "partition_id": "1"
+        }
     }
     ' http://router_server/document/query
 
