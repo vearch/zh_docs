@@ -10,6 +10,7 @@ $id 是插入数据时使用指定的值替换服务端生成的唯一标识，$
 --------
 如果设置了主键_id，则将使用指定的主键。 如果未设置，则由 Vearch 生成。 如果插入时指定的_id已经存在，则更新现有数据； 否则，它将被插入。
 当插入数据中的documents包含多条数据，则为批量插入，一般建议批量插入不超过100条。
+插入和更新现在已经支持只传入部分字段的值，插入时只传入部分字段则必须包含向量字段，更新时无此限制。
 
 插入时不指定唯一标识id
 ::
@@ -223,27 +224,27 @@ document_ids传入唯一记录id，后台处理首先根据唯一id查询出该�
 
     curl -H "content-type: application/json" -XPOST -d'
     {
-    "query": {
-        "document_ids": [
-        "3646866681750952826"
-        ],
-        "filter": [
-        {
-            "range": {
-            "field_int": {
-                "gte": 1000,
-                "lte": 100000
+        "query": {
+            "document_ids": [
+            "3646866681750952826"
+            ],
+            "filter": [
+            {
+                "range": {
+                "field_int": {
+                    "gte": 1000,
+                    "lte": 100000
+                }
+                }
             }
-            }
-        }
-        ]
-    },
-    "retrieval_param": {
-        "metric_type": "L2"
-    },
-    "size": 3,
-    "db_name": "ts_db",
-    "space_name": "ts_space"
+            ]
+        },
+        "retrieval_param": {
+            "metric_type": "L2"
+        },
+        "size": 3,
+        "db_name": "ts_db",
+        "space_name": "ts_space"
     }
     ' http://router_server/document/search
 
@@ -289,35 +290,35 @@ document_ids传入唯一记录id，后台处理首先根据唯一id查询出该�
 表空间定义时支持多个特征字段，因此查询时可以支持相应数据的特征进行查询。以每条记录两个向量为例：定义表结构字段
 ::
 
-  {
-      "field1": {
-          "type": "vector",
-          "dimension": 128
-      },
-      "field2": {
-          "type": "vector",
-          "dimension": 256
-      } 
-  }
+    {
+        "field1": {
+            "type": "vector",
+            "dimension": 128
+        },
+        "field2": {
+            "type": "vector",
+            "dimension": 256
+        } 
+    }
 
 
 field1、field2均为向量字段，查询时搜索条件可以指定两个向量：
 ::
 
-  {
-      "query": {
-          "vector": [{
-              "field": "filed1",
-              "feature": [0.1, 0.2, 0.3, 0.4, 0.5],
-              "min_score": 0.9
-          },
-          {
-              "field": "filed2",
-              "feature": [0.8, 0.9],
-              "min_score": 0.8
-          }]
-      }
-  }
+    {
+        "query": {
+            "vector": [{
+                "field": "filed1",
+                "feature": [0.1, 0.2, 0.3, 0.4, 0.5],
+                "min_score": 0.9
+            },
+            {
+                "field": "filed2",
+                "feature": [0.8, 0.9],
+                "min_score": 0.8
+            }]
+        }
+    }
 
 
 field1和field2过滤的结果求交集，其他参数及请求地址和普通查询一致。 
@@ -424,53 +425,53 @@ retrieval_param 参数指定模型计算时的参数，不同模型支持的参�
 IVFPQ:
 ::
   
-  "retrieval_param": {
-      "parallel_on_queries": 1,
-      "recall_num" : 100,
-      "nprobe": 80,
-      "metric_type": "L2" 
-  }
+    "retrieval_param": {
+        "parallel_on_queries": 1,
+        "recall_num" : 100,
+        "nprobe": 80,
+        "metric_type": "L2" 
+    }
 
 GPU:
 ::
-  "retrieval_param": {
-      "recall_num" : 100,
-      "nprobe": 80,
-      "metric_type": "L2"
-  }
+    "retrieval_param": {
+        "recall_num" : 100,
+        "nprobe": 80,
+        "metric_type": "L2"
+    }
 
 HNSW:
 ::
-  "retrieval_param": {
-      "efSearch": 64,
-      "metric_type": "L2"
-  }
+    "retrieval_param": {
+        "efSearch": 64,
+        "metric_type": "L2"
+    }
 
 IVFFLAT:
 ::
 
-  "retrieval_param": {
-      "parallel_on_queries": 1,
-      "nprobe": 80,
-      "metric_type": "L2"
-  }
+    "retrieval_param": {
+        "parallel_on_queries": 1,
+        "nprobe": 80,
+        "metric_type": "L2"
+    }
 
 FLAT:
 ::
 
-  "retrieval_param": {
-      "metric_type": "L2"
-  }
+    "retrieval_param": {
+        "metric_type": "L2"
+    }
 
 - vector json结构说明:
 ::
 
-  "vector": [{
-            "field": "field_name",
-            "feature": [0.1, 0.2, 0.3, 0.4, 0.5],
-            "min_score": 0.9,
-            "boost": 0.5
-         }]
+    "vector": [{
+                "field": "field_name",
+                "feature": [0.1, 0.2, 0.3, 0.4, 0.5],
+                "min_score": 0.9,
+                "boost": 0.5
+            }]
 
 
 (1) vector 支持多个(对应定义表结构时包含多个特征字段)。
@@ -486,34 +487,34 @@ FLAT:
 - filter json结构说明:
 ::
 
-  "filter": [
-               {
-                   "range": {
-                       "field_name": {
-                            "gte": 160,
-                            "lte": 180
-                       }
-                   }
-               },
-               {
-                   "term": {
-                       "field1": ["100", "200", "300"],
-                       "operator": "or"
-                   }
-	       },
-	       {
-                   "term": {
-                       "field2": ["a", "b", "c"],
-                       "operator": "and"
-                   }
-	       },
-	       {
-                   "term": {
-                       "field3": ["A1", "B2"],
-                       "operator": "not"
-                   } 
-               }
-            ]
+    "filter": [
+        {
+            "range": {
+                "field_name": {
+                    "gte": 160,
+                    "lte": 180
+                }
+            }
+        },
+        {
+            "term": {
+                "field1": ["100", "200", "300"],
+                "operator": "or"
+            }
+        },
+        {
+            "term": {
+                "field2": ["a", "b", "c"],
+                "operator": "and"
+            }
+        },
+        {
+            "term": {
+                "field3": ["A1", "B2"],
+                "operator": "not"
+            } 
+        }
+    ]
 
 (1) filter 条件支持多个，多个条件之间是交的关系。
 
@@ -556,28 +557,28 @@ FLAT:
   
     curl -H "content-type: application/json" -XPOST -d'
     {
-    "db_name": "ts_db",
-    "space_name": "ts_space",
-    "query": {
-        "filter": [
-        {
-            "range": {
-            "field_int": {
-                "gte": 1000,
-                "lte": 100000
+        "db_name": "ts_db",
+        "space_name": "ts_space",
+        "query": {
+            "filter": [
+            {
+                "range": {
+                "field_int": {
+                    "gte": 1000,
+                    "lte": 100000
+                }
+                }
+            },
+            {
+                "term": {
+                "field_string": [
+                    "322"
+                ]
+                }
             }
-            }
-        },
-        {
-            "term": {
-            "field_string": [
-                "322"
             ]
-            }
-        }
-        ]
-    },
-    "size": 3
+        },
+        "size": 3
     }
     ' http://router_server/document/delete
 
