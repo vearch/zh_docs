@@ -10,6 +10,7 @@ $id 是插入数据时使用指定的值替换服务端生成的唯一标识，$
 --------
 如果设置了主键_id，则将使用指定的主键。 如果未设置，则由 Vearch 生成。 如果插入时指定的_id已经存在，则更新现有数据； 否则，它将被插入。
 当插入数据中的documents包含多条数据，则为批量插入，一般建议批量插入不超过100条。
+
 插入时不指定唯一标识id
 ::
 
@@ -107,7 +108,7 @@ upsert接口返回值格式如下:
             'error': 'success'
         }]
     }
-total 标识插入成功的数量，document_ids将返回生成的_id和插入结果信息。
+total 标识插入成功的数量，document_ids返回生成的_id和插入结果信息。
 
 精确查找 query接口
 --------
@@ -153,27 +154,27 @@ document_id可以是指定分区的[0, max_docid]，max_docid和分区信息可�
 
     curl -H "content-type: application/json" -XPOST -d'
     {
-    "db_name": "ts_db",
-    "space_name": "ts_space",
-    "query": {
-        "filter": [
-        {
-            "range": {
-            "field_int": {
-                "gte": 1000,
-                "lte": 100000
+        "db_name": "ts_db",
+        "space_name": "ts_space",
+        "query": {
+            "filter": [
+            {
+                "range": {
+                "field_int": {
+                    "gte": 1000,
+                    "lte": 100000
+                }
+                }
+            },
+            {
+                "term": {
+                "field_string": [
+                    "322"
+                ]
+                }
             }
-            }
-        },
-        {
-            "term": {
-            "field_string": [
-                "322"
             ]
-            }
         }
-        ]
-    }
     }
     ' http://router_server/document/query
 
@@ -254,32 +255,32 @@ document_ids传入唯一记录id，后台处理首先根据唯一id查询出该�
 
     curl -H "content-type: application/json" -XPOST -d'
     {
-    "query": {
-        "vector": [
-        {
-            "field": "field_vector",
-            "feature": [
-            "..."
+        "query": {
+            "vector": [
+            {
+                "field": "field_vector",
+                "feature": [
+                "..."
+                ]
+            }
+            ],
+            "filter": [
+            {
+                "range": {
+                "field_int": {
+                    "gte": 1000,
+                    "lte": 100000
+                }
+                }
+            }
             ]
-        }
-        ],
-        "filter": [
-        {
-            "range": {
-            "field_int": {
-                "gte": 1000,
-                "lte": 100000
-            }
-            }
-        }
-        ]
-    },
-    "retrieval_param": {
-        "metric_type": "L2"
-    },
-    "size": 3,
-    "db_name": "ts_db",
-    "space_name": "ts_space"
+        },
+        "retrieval_param": {
+            "metric_type": "L2"
+        },
+        "size": 3,
+        "db_name": "ts_db",
+        "space_name": "ts_space"
     }
     ' http://router_server/document/search
 
@@ -362,21 +363,21 @@ search接口返回格式
 查询参数整体json结构如下:
 ::
 
-  {
-      "query": {
-          "vector": [],
-          "filter": []
-      },
-      "retrieval_param": {"nprobe": 20},
-      "fields": ["field1", "field2"],
-      "is_brute_search": 0,
-      "online_log_level": "debug",
-      "quick": false,
-      "vector_value": false,
-      "client_type": "leader",
-      "l2_sqrt": false,
-      "size": 10
-  }
+    {
+        "query": {
+            "vector": [],
+            "filter": []
+        },
+        "retrieval_param": {"nprobe": 20},
+        "fields": ["field1", "field2"],
+        "is_brute_search": 0,
+        "online_log_level": "debug",
+        "quick": false,
+        "vector_value": false,
+        "client_type": "leader",
+        "l2_sqrt": false,
+        "size": 10
+    }
 
 
 参数说明:
