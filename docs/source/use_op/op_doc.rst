@@ -13,199 +13,203 @@ $id 是插入数据时使用指定的值替换服务端生成的唯一标识，$
 插入时不指定唯一标识id
 ::
 
-curl -H "content-type: application/json" -XPOST -d'
-{
-	"db_name": "ts_db",
-	"space_name": "ts_space",
-	"documents": [{
-		"field_int": 90399,
-		"field_float": 90399,
-		"field_double": 90399,
-		"field_string": "111399",
-		"field_vector": {
-			"feature": [...]
-		}
-	}, {
-		"field_int": 45085,
-		"field_float": 45085,
-		"field_double": 45085,
-		"field_string": "106085",
-		"field_vector": {
-			"feature": [...]
-		}
-	}, {
-		"field_int": 52968,
-		"field_float": 52968,
-		"field_double": 52968,
-		"field_string": "113968",
-		"field_vector": {
-			"feature": [...]
-		}
-	}]
-}
-' http://router_server/document/upsert
+    curl -H "content-type: application/json" -XPOST -d'
+    {
+        "db_name": "ts_db",
+        "space_name": "ts_space",
+        "documents": [{
+            "field_int": 90399,
+            "field_float": 90399,
+            "field_double": 90399,
+            "field_string": "111399",
+            "field_vector": {
+                "feature": [...]
+            }
+        }, {
+            "field_int": 45085,
+            "field_float": 45085,
+            "field_double": 45085,
+            "field_string": "106085",
+            "field_vector": {
+                "feature": [...]
+            }
+        }, {
+            "field_int": 52968,
+            "field_float": 52968,
+            "field_double": 52968,
+            "field_string": "113968",
+            "field_vector": {
+                "feature": [...]
+            }
+        }]
+    }
+    ' http://router_server/document/upsert
 
 field_vector是特征字段，其它字段为标量字段。所有字段名、值类型和定义表结构时保持一致。
 
 插入时指定唯一标识
 ::
 
-curl -H "content-type: application/json" -XPOST -d'
-{
-	"db_name": "ts_db",
-	"space_name": "ts_space",
-	"documents": [{
-		"_id": 1000000,
-		"field_int": 90399,
-		"field_float": 90399,
-		"field_double": 90399,
-		"field_string": "111399",
-		"field_vector": {
-			"feature": [...]
-		}
-	}, {
-		"_id": 1000001,
-		"field_int": 45085,
-		"field_float": 45085,
-		"field_double": 45085,
-		"field_string": "106085",
-		"field_vector": {
-			"feature": [...]
-		}
-	}, {
-		"_id": 1000002,
-		"field_int": 52968,
-		"field_float": 52968,
-		"field_double": 52968,
-		"field_string": "113968",
-		"field_vector": {
-			"feature": [...]
-		}
-	}]
-}
-' http://router_server/document/upsert
+    curl -H "content-type: application/json" -XPOST -d'
+    {
+        "db_name": "ts_db",
+        "space_name": "ts_space",
+        "documents": [{
+            "_id": 1000000,
+            "field_int": 90399,
+            "field_float": 90399,
+            "field_double": 90399,
+            "field_string": "111399",
+            "field_vector": {
+                "feature": [...]
+            }
+        }, {
+            "_id": 1000001,
+            "field_int": 45085,
+            "field_float": 45085,
+            "field_double": 45085,
+            "field_string": "106085",
+            "field_vector": {
+                "feature": [...]
+            }
+        }, {
+            "_id": 1000002,
+            "field_int": 52968,
+            "field_float": 52968,
+            "field_double": 52968,
+            "field_string": "113968",
+            "field_vector": {
+                "feature": [...]
+            }
+        }]
+    }
+    ' http://router_server/document/upsert
 
 
 upsert接口返回值格式如下:
 ::
-{
-	'code': 0,
-	'msg': 'success',
-	'total': 3,
-	'document_ids': [{
-		'_id': '-526059949411103803',
-		'status': 200,
-		'error': 'success'
-	}, {
-		'_id': '1287805132970120733',
-		'status': 200,
-		'error': 'success'
-	}, {
-		'_id': '-1948185285365684656',
-		'status': 200,
-		'error': 'success'
-	}]
-}
+
+    {
+        'code': 0,
+        'msg': 'success',
+        'total': 3,
+        'document_ids': [{
+            '_id': '-526059949411103803',
+            'status': 200,
+            'error': 'success'
+        }, {
+            '_id': '1287805132970120733',
+            'status': 200,
+            'error': 'success'
+        }, {
+            '_id': '-1948185285365684656',
+            'status': 200,
+            'error': 'success'
+        }]
+    }
 total 标识插入成功的数量，document_ids将返回生成的_id和插入结果信息。
 
 精确查找 query接口
+--------
 /document/query 接口用于精确查找与查询条件完全匹配的数据，查找时不包含向量数据。
 支持两种方式：一种是直接通过主键获取文档，另一种是根据过滤条件获取对应的文档。 
 如果设置了partition_id，则获取指定数据分区上对应的文档。 此时document_id的含义就是该分区上的文档编号。 
 document_id可以是指定分区的[0, max_docid]，max_docid和分区信息可以通过cluster/health接口获取。 
 可以通过这种方式获取集群的完整数据。
---------
+
 根据唯一id标识查找数据
 ::
 
-curl -H "content-type: application/json" -XPOST -d'
-{
-	"db_name": "ts_db",
-	"space_name": "ts_space",
-	"query": {
-		"document_ids": ["6560995651113580768", "-5621139761924822824", "-104688682735192253"]
-	}
-}
-' http://router_server/document/query
+    curl -H "content-type: application/json" -XPOST -d'
+    {
+        "db_name": "ts_db",
+        "space_name": "ts_space",
+        "query": {
+            "document_ids": ["6560995651113580768", "-5621139761924822824", "-104688682735192253"]
+        }
+    }
+    ' http://router_server/document/query
 
 获取指定数据分区上对应的文档，此时document_id可以是指定分区的[0, max_docid]
 ::
 
-curl -H "content-type: application/json" -XPOST -d'
-{
-  "db_name": "ts_db",
-  "space_name": "ts_space",
-  "query": {
-    "document_ids": [
-      "10000",
-      "10001",
-      "10002"
-    ],
-    "partition_id": "1"
-  }
-}
-' http://router_server/document/query
+    curl -H "content-type: application/json" -XPOST -d'
+    {
+    "db_name": "ts_db",
+    "space_name": "ts_space",
+    "query": {
+        "document_ids": [
+        "10000",
+        "10001",
+        "10002"
+        ],
+        "partition_id": "1"
+    }
+    }
+    ' http://router_server/document/query
 
 根据自定义的标量字段的 Filter 表达式查找
 ::
-curl -H "content-type: application/json" -XPOST -d'
-{
-  "db_name": "ts_db",
-  "space_name": "ts_space",
-  "query": {
-    "filter": [
-      {
-        "range": {
-          "field_int": {
-            "gte": 1000,
-            "lte": 100000
-          }
+
+    curl -H "content-type: application/json" -XPOST -d'
+    {
+    "db_name": "ts_db",
+    "space_name": "ts_space",
+    "query": {
+        "filter": [
+        {
+            "range": {
+            "field_int": {
+                "gte": 1000,
+                "lte": 100000
+            }
+            }
+        },
+        {
+            "term": {
+            "field_string": [
+                "322"
+            ]
+            }
         }
-      },
-      {
-        "term": {
-          "field_string": [
-            "322"
-          ]
-        }
-      }
-    ]
-  }
-}
-' http://router_server/document/query
+        ]
+    }
+    }
+    ' http://router_server/document/query
 
 query接口返回格式
 ::
-{
-	'code': 0,
-	'msg': 'success',
-	'total': 3,
-	'documents': [{
-		'_id': '6560995651113580768',
-		'_source': {
-			'field_double': 202558,
-			'field_float': 102558,
-			'field_int': 1558,
-			'field_string': '1558'
-		}
-	}, {
-		'_id': '-5621139761924822824',
-		'_source': {
-			'field_double': 210887,
-			'field_float': 110887,
-			'field_int': 89887,
-			'field_string': '89887'
-		}
-	}, {
-		'_id': '-104688682735192253',
-		'_source': {
-			'field_double': 207588,
-			'field_float': 107588,
-			'field_int': 46588,
-			'field_string': '46588'
-		}
-	}]
-}
+
+    {
+        'code': 0,
+        'msg': 'success',
+        'total': 3,
+        'documents': [{
+            '_id': '6560995651113580768',
+            '_source': {
+                'field_double': 202558,
+                'field_float': 102558,
+                'field_int': 1558,
+                'field_string': '1558'
+            }
+        }, {
+            '_id': '-5621139761924822824',
+            '_source': {
+                'field_double': 210887,
+                'field_float': 110887,
+                'field_int': 89887,
+                'field_string': '89887'
+            }
+        }, {
+            '_id': '-104688682735192253',
+            '_source': {
+                'field_double': 207588,
+                'field_float': 107588,
+                'field_int': 46588,
+                'field_string': '46588'
+            }
+        }]
+    }
 
 模糊查询 search接口
 --------
@@ -216,31 +220,31 @@ document_ids传入唯一记录id，后台处理首先根据唯一id查询出该�
 根据document_ids 查询
 ::
 
-curl -H "content-type: application/json" -XPOST -d'
-{
-  "query": {
-    "document_ids": [
-      "3646866681750952826"
-    ],
-    "filter": [
-      {
-        "range": {
-          "field_int": {
-            "gte": 1000,
-            "lte": 100000
-          }
+    curl -H "content-type: application/json" -XPOST -d'
+    {
+    "query": {
+        "document_ids": [
+        "3646866681750952826"
+        ],
+        "filter": [
+        {
+            "range": {
+            "field_int": {
+                "gte": 1000,
+                "lte": 100000
+            }
+            }
         }
-      }
-    ]
-  },
-  "retrieval_param": {
-    "metric_type": "L2"
-  },
-  "size": 3,
-  "db_name": "ts_db",
-  "space_name": "ts_space"
-}
-' http://router_server/document/search
+        ]
+    },
+    "retrieval_param": {
+        "metric_type": "L2"
+    },
+    "size": 3,
+    "db_name": "ts_db",
+    "space_name": "ts_space"
+    }
+    ' http://router_server/document/search
 
 根据向量查询
 支持单条或者多条查询，多条可以将多个查询的特征拼接成一个特征数组（比如定义128维的特征，批量查询10条，
@@ -248,36 +252,36 @@ curl -H "content-type: application/json" -XPOST -d'
 后台接收到请求后按表结构定义的特征字段维度进行拆分，按顺序返回匹配结果。
 ::
 
-curl -H "content-type: application/json" -XPOST -d'
-{
-  "query": {
-    "vector": [
-      {
-        "field": "field_vector",
-        "feature": [
-          "..."
-        ]
-      }
-    ],
-    "filter": [
-      {
-        "range": {
-          "field_int": {
-            "gte": 1000,
-            "lte": 100000
-          }
+    curl -H "content-type: application/json" -XPOST -d'
+    {
+    "query": {
+        "vector": [
+        {
+            "field": "field_vector",
+            "feature": [
+            "..."
+            ]
         }
-      }
-    ]
-  },
-  "retrieval_param": {
-    "metric_type": "L2"
-  },
-  "size": 3,
-  "db_name": "ts_db",
-  "space_name": "ts_space"
-}
-' http://router_server/document/search
+        ],
+        "filter": [
+        {
+            "range": {
+            "field_int": {
+                "gte": 1000,
+                "lte": 100000
+            }
+            }
+        }
+        ]
+    },
+    "retrieval_param": {
+        "metric_type": "L2"
+    },
+    "size": 3,
+    "db_name": "ts_db",
+    "space_name": "ts_space"
+    }
+    ' http://router_server/document/search
 
 
 多向量查询
@@ -319,40 +323,41 @@ field1和field2过滤的结果求交集，其他参数及请求地址和普通�
 
 search接口返回格式
 ::
-{
-	'code': 0,
-	'msg': 'success',
-	'documents': [
-		[{
-			'_id': '6979025510302030694',
-			'_score': 16.55717658996582,
-			'_source': {
-				'field_double': 207598,
-				'field_float': 107598,
-				'field_int': 6598,
-				'field_string': '6598'
-			}
-		}, {
-			'_id': '-104688682735192253',
-			'_score': 17.663991928100586,
-			'_source': {
-				'field_double': 207588,
-				'field_float': 107588,
-				'field_int': 46588,
-				'field_string': '46588'
-			}
-		}, {
-			'_id': '8549822044854277588',
-			'_score': 17.88829803466797,
-			'_source': {
-				'field_double': 220413,
-				'field_float': 120413,
-				'field_int': 99413,
-				'field_string': '99413'
-			}
-		}]
-	]
-}
+
+    {
+        'code': 0,
+        'msg': 'success',
+        'documents': [
+            [{
+                '_id': '6979025510302030694',
+                '_score': 16.55717658996582,
+                '_source': {
+                    'field_double': 207598,
+                    'field_float': 107598,
+                    'field_int': 6598,
+                    'field_string': '6598'
+                }
+            }, {
+                '_id': '-104688682735192253',
+                '_score': 17.663991928100586,
+                '_source': {
+                    'field_double': 207588,
+                    'field_float': 107588,
+                    'field_int': 46588,
+                    'field_string': '46588'
+                }
+            }, {
+                '_id': '8549822044854277588',
+                '_score': 17.88829803466797,
+                '_source': {
+                    'field_double': 220413,
+                    'field_float': 120413,
+                    'field_int': 99413,
+                    'field_string': '99413'
+                }
+            }]
+        ]
+    }
 
 查询参数整体json结构如下:
 ::
@@ -535,54 +540,54 @@ FLAT:
 删除指定document_ids
 ::
 
-curl -H "content-type: application/json" -XPOST -d'
-{
-	"db_name": "ts_db",
-	"space_name": "ts_space",
-	"query": {
-		'document_ids': ['4501743250723073467', '616335952940335471', '-2422965400649882823']
-	}
-}
-' http://router_server/document/delete
+    curl -H "content-type: application/json" -XPOST -d'
+    {
+        "db_name": "ts_db",
+        "space_name": "ts_space",
+        "query": {
+            'document_ids': ['4501743250723073467', '616335952940335471', '-2422965400649882823']
+        }
+    }
+    ' http://router_server/document/delete
   
 删除满足过滤条件的文档，size指定每个数据分片删除的条数
---------
 ::
   
-curl -H "content-type: application/json" -XPOST -d'
-{
-  "db_name": "ts_db",
-  "space_name": "ts_space",
-  "query": {
-    "filter": [
-      {
-        "range": {
-          "field_int": {
-            "gte": 1000,
-            "lte": 100000
-          }
+    curl -H "content-type: application/json" -XPOST -d'
+    {
+    "db_name": "ts_db",
+    "space_name": "ts_space",
+    "query": {
+        "filter": [
+        {
+            "range": {
+            "field_int": {
+                "gte": 1000,
+                "lte": 100000
+            }
+            }
+        },
+        {
+            "term": {
+            "field_string": [
+                "322"
+            ]
+            }
         }
-      },
-      {
-        "term": {
-          "field_string": [
-            "322"
-          ]
-        }
-      }
-    ]
-  },
-  "size": 3
-}
-' http://router_server/document/delete
+        ]
+    },
+    "size": 3
+    }
+    ' http://router_server/document/delete
 
 
 delete接口返回格式
 ::
-{
-	'code': 0,
-	'msg': 'success',
-	'total': 3,
-	'document_ids': ['4501743250723073467', '616335952940335471', '-2422965400649882823']
-}
+
+    {
+        'code': 0,
+        'msg': 'success',
+        'total': 3,
+        'document_ids': ['4501743250723073467', '616335952940335471', '-2422965400649882823']
+    }
 
