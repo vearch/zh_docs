@@ -75,6 +75,7 @@ method=0: node id 1上添加分片id 1 的副本; method=1: 删除 node id 1 上
 
 
 3.删除目标集群的 /server 元信息
+
 可以etcdctl get 先查询server 元信息的前缀，不同的版本可能包含不同的前缀信息
 ::
 
