@@ -1,7 +1,6 @@
 常见问题
 ================
 
-1. Vearch的向量搜索引擎gamma基于faiss实现，faiss版本有较大改动不兼容历史版本时Vearch可能编译不成功。
-
+https://github.com/vearch/vearch/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98
 
 
