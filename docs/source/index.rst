@@ -12,7 +12,7 @@ Vearch 系统介绍
       :maxdepth: 2
    :caption: 操作手册
 
-   use_op/cluster_status.rst
+   use_op/op_cluster.rst
    use_op/op_db.rst
    use_op/op_space.rst
    use_op/op_doc.rst
