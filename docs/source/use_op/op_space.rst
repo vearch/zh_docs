@@ -316,6 +316,13 @@ Gamma引擎支持标量索引，提供对标量数据的过滤功能，开启方
   
   curl -XGET http://master_server/space/$db_name/$space_name
 
+查看表空间文档数
+--------
+::
+  
+  curl -XGET http://master_server/_cluster/health?db=$db_name&space=$space_name
+
+查看对应的doc_num字段即可
 
 删除表空间
 --------
