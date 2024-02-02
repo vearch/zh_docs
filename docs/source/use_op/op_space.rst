@@ -306,7 +306,7 @@ properties配置:
 
 5、dimension 定义type是vector的字段，指定特征维数大小。
 
-6、store_type 特征向量存储类型，有以下三个选项：
+6、store_type 特征向量存储类型，有以下几个选项：
 
 "MemoryOnly"：原始向量都存储在内存中，存储数量的多少受内存限制，适用于数据量不大（千万级），对性能要求高的场景
 
