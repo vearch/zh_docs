@@ -50,11 +50,7 @@ http://master_server代表master服务，$db_name是创建的库名, $space_name
           "field7": {
               "type": "vector",
               "dimension": 256,
-              "format": "normalization",
-              "store_type": "RocksDB",
-              "store_param": {
-                  "cache_size": 2048
-              }
+              "format": "normalization"
           }
       }
   }
@@ -97,11 +93,11 @@ engine配置:
 |retrieval_param |检索模型参数配置 |json           |否        |                                       |
 +----------------+-----------------+---------------+----------+---------------------------------------+
 
-1、index_size 指定每个分片的记录数量达到多少开始创建索引，默认值100000。
+1、index_size 指定每个分片的记录数量达到多少开始创建向量索引，对于需要训练的索引类型如IVFPQ\IVFFLAT\GPU|BINARYIVF，需设置合适的值，对于HNSW\FLAT设置成1即可，默认值100000。
 
 2、id_type 指定唯一记录主键类型，支持String和Long(定义为Long可节省内存占用)。 
 
-3、retrieval_type 检索模型，目前支持六种类型，IVFPQ，HNSW，GPU，IVFFLAT，BINARYIVF，FLAT，不同的检索模型需要的参数配置及默认值如下:
+3、retrieval_type 检索模型，目前支持六种类型，IVFPQ，HNSW，GPU，IVFFLAT，BINARYIVF，FLAT，详细可看链接https://github.com/vearch/vearch/wiki/Vearch%E7%B4%A2%E5%BC%95%E4%BB%8B%E7%BB%8D%E5%92%8C%E5%8F%82%E6%95%B0%E9%80%89%E6%8B%A9 ，不同的检索模型需要的参数配置及默认值如下:
 
 IVFPQ:
 
@@ -266,6 +262,24 @@ BINARYIVF:
   
   注意: 1、向量长度是8的倍数
 
+FLAT:
+
++---------------+------------------+------------+------------+----------------------------------------+
+|字段标识       |字段含义          |类型        |是否必填    |备注                                    |
++===============+==================+============+============+========================================+
+|metric_type    |计算方式          |string      |是          |L2或者InnerProduct                      |
++---------------+------------------+------------+------------+----------------------------------------+
+
+::
+ 
+  "retrieval_type": "FLAT",
+  "retrieval_param": {
+      "metric_type": "InnerProduct"
+  }
+  
+ 注意: 1、向量存储方式只支持MemoryOnly
+
+
 properties配置:
 
 1、表空间结构定义字段支持的类型(即type的值)有6种: string(keyword)，integer， long， float，double， vector。
@@ -283,7 +297,7 @@ properties配置:
 +-------------+---------------+---------------+----------+----------------------------------------------+
 |format       |归一化处理     |string         |否        |设置为normalization对添加的特征向量归一化处理 |
 +-------------+---------------+---------------+----------+----------------------------------------------+
-|store_type   |特征存储类型   |string         |否        |支持MemoryOnly、Mmap和RocksDB, 默认MemoryOnly |
+|store_type   |特征存储类型   |string         |否        |支持MemoryOnly、RocksDB, 不同索引默认值不一样 |
 +-------------+---------------+---------------+----------+----------------------------------------------+
 |store_param  |存储参数设置   |json           |否        |针对不同store_type的存储参数                  |
 +-------------+---------------+---------------+----------+----------------------------------------------+
@@ -298,13 +312,11 @@ properties配置:
 
 "RocksDB"：原始向量存储在RockDB（磁盘）中，存储数量受磁盘大小限制，适用单机数据量巨大（亿级以上），对性能要求不高的场景
 
-"Mmap"：原始向量存储在磁盘文件中，使用cache提高性能，存储数量受磁盘大小限制，适用单机数据量巨大（亿级以上），对性能要求不高的场景
 
 7、store_param 针对不同store_type的存储参数，其包含以下两个子参数。
 
 cache_size: 数值类型，单位是M bytes，默认1024。store_type="RocksDB"时，表示RocksDB的读缓冲大小，值越大读向量的性能越好，一般设置1024、2048、4096和6144即可；store_type="Mmap"时，表示读缓冲的大小，一般512、1024、2048和4096即可，可根据实际应用场景设置大小；store_type="MemoryOnly"，cache_size不生效。
 
-compress: 设置为{"rate":16} 压缩50%； 默认不压缩。
 
 标量索引
 
