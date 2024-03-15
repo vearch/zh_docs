@@ -251,7 +251,7 @@ document_ids传入唯一记录id，后台首先根据唯一id查询出该记录�
             }
             ]
         },
-        "retrieval_param": {
+        "index_params": {
             "metric_type": "L2"
         },
         "size": 3,
@@ -288,7 +288,7 @@ document_ids传入唯一记录id，后台首先根据唯一id查询出该记录�
             }
             ]
         },
-        "retrieval_param": {
+        "index_params": {
             "metric_type": "L2"
         },
         "size": 3,
@@ -381,7 +381,7 @@ search接口返回格式
             "vector": [],
             "filter": []
         },
-        "retrieval_param": {"nprobe": 20},
+        "index_params": {"nprobe": 20},
         "fields": ["field1", "field2"],
         "is_brute_search": 0,
         "online_log_level": "debug",
@@ -423,7 +423,7 @@ search接口返回格式
 | size             | int      | 否       | 指定返回结果数量,默认50                    |
 +------------------+----------+----------+--------------------------------------------+
 
-retrieval_param 参数指定模型计算时的参数，不同模型支持的参数不同，如下示例:
+index_params 参数指定模型计算时的参数，不同模型支持的参数不同，如下示例:
 
 - metric_type: 计算类型，支持InnerProduct和L2, 默认L2。
 
@@ -438,7 +438,7 @@ retrieval_param 参数指定模型计算时的参数，不同模型支持的参�
 IVFPQ:
 ::
   
-    "retrieval_param": {
+    "index_params": {
         "parallel_on_queries": 1,
         "recall_num" : 100,
         "nprobe": 80,
@@ -447,7 +447,7 @@ IVFPQ:
 
 GPU:
 ::
-    "retrieval_param": {
+    "index_params": {
         "recall_num" : 100,
         "nprobe": 80,
         "metric_type": "L2"
@@ -455,7 +455,7 @@ GPU:
 
 HNSW:
 ::
-    "retrieval_param": {
+    "index_params": {
         "efSearch": 64,
         "metric_type": "L2"
     }
@@ -463,7 +463,7 @@ HNSW:
 IVFFLAT:
 ::
 
-    "retrieval_param": {
+    "index_params": {
         "parallel_on_queries": 1,
         "nprobe": 80,
         "metric_type": "L2"
@@ -472,7 +472,7 @@ IVFFLAT:
 FLAT:
 ::
 
-    "retrieval_param": {
+    "index_params": {
         "metric_type": "L2"
     }
 
