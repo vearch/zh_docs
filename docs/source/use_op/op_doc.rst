@@ -96,11 +96,11 @@ json格式的变体，{"index": {"_id": "v1"}} 指定记录的id, _id值为空�
   curl -H "content-type: application/json" -XPOST -d'
   {
       "query": {
-          "sum": [{}]
+          "filter": [{}]
       }
   }   
   ' http://router_server/$db_name/$space_name/_delete_by_query
-
+只支持传入标量字段进行删除
 
 查询详细语法见下文
 
