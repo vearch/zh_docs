@@ -53,19 +53,19 @@ http://master_server代表master服务，$db_name是创建的库名, $space_name
 
 参数说明:
 
-+---------------+----------+--------+----------+------------------+
-|   字段标识    | 字段含义 |  类型  | 是否必填 |       备注       |
-+===============+==========+========+==========+==================+
-| name          | 空间名称 | string | 是       |                  |
-+---------------+----------+--------+----------+------------------+
-| partition_num | 分片数量 | int    | 是       |                  |
-+---------------+----------+--------+----------+------------------+
-| replica_num   | 副本数量 | int    | 是       |                  |
-+---------------+----------+--------+----------+------------------+
-| index         | 索引配置 | json   | 是       | 索引类型和参数   |
-+---------------+----------+--------+----------+------------------+
-| fileds        | 空间配置 | json   | 是       | 定义表字段及类型 |
-+---------------+----------+--------+----------+------------------+
++---------------+----------+--------+----------+-------------------------+
+|   字段标识    | 字段含义 |  类型  | 是否必填 |          备注           |
++===============+==========+========+==========+=========================+
+| name          | 空间名称 | string | 是       |                         |
++---------------+----------+--------+----------+-------------------------+
+| partition_num | 分片数量 | int    | 是       |                         |
++---------------+----------+--------+----------+-------------------------+
+| replica_num   | 副本数量 | int    | 是       | 通常设置为3来实现高可用 |
++---------------+----------+--------+----------+-------------------------+
+| index         | 索引配置 | json   | 是       | 索引类型和参数          |
++---------------+----------+--------+----------+-------------------------+
+| fileds        | 空间配置 | json   | 是       | 定义表字段及类型        |
++---------------+----------+--------+----------+-------------------------+
 
 1、name 不能为空，不能以数字或下划线开头，尽量不使用特殊字符等。
 
@@ -319,6 +319,211 @@ Gamma引擎支持标量索引，提供对标量数据的过滤功能，开启方
 ::
   
   curl -XGET http://master_server/dbs/$db_name/spaces/$space_name
+
+返回数据信息
++---------------+----------------+--------+----------+-------------------------+
+|   字段标识    |    字段含义    |  类型  | 是否必填 |          备注           |
++===============+================+========+==========+=========================+
+| space_name    | 表名           | string | 是       |                         |
++---------------+----------------+--------+----------+-------------------------+
+| db_name       | 库名           | string | 否       |                         |
++---------------+----------------+--------+----------+-------------------------+
+| doc_num       | 表文档数量     | int64  | 否       |                         |
++---------------+----------------+--------+----------+-------------------------+
+| partition_num | 分片数量       | int    | 否       | 对表所有数据进行分片      |
++---------------+----------------+--------+----------+-------------------------+
+| replica_num   | 副本数量       | int    | 否       | 通常设置为3来实现高可用 |
++---------------+----------------+--------+----------+-------------------------+
+| schema        | 表结构         | json   | 否       |                         |
++---------------+----------------+--------+----------+-------------------------+
+| status        | 表状态         | string | 否       | red表示表有异常         |
++---------------+----------------+--------+----------+-------------------------+
+| partitions    | 表分片详细信息 | string | 否       | 参数控制是否返回此信息  |
++---------------+----------------+--------+----------+-------------------------+
+
+返回值格式如下:
+::
+  {
+      "code": 200,
+      "msg": "success",
+      "data": {
+          "space_name": "ts_space",
+          "db_name": "ts_db",
+          "doc_num": 0,
+          "partition_num": 1,
+          "replica_num": 1,
+          "schema": {
+              "fields": {
+                  "field_string": {
+                      "type": "keyword"
+                  },
+                  "field_int": {
+                      "type": "integer"
+                  },
+                  "field_float": {
+                      "type": "float",
+                      "index": true
+                  },
+                  "field_string_array": {
+                      "type": "string",
+                      "array": true,
+                      "index": true
+                  },
+                  "field_int_index": {
+                      "type": "integer",
+                      "index": true
+                  },
+                  "field_vector": {
+                      "type": "vector",
+                      "dimension": 128
+                  },
+                  "field_vector_normal": {
+                      "type": "vector",
+                      "dimension": 256,
+                      "format": "normalization"
+                  }
+              },
+              "index": {
+                  "index_name": "gamma",
+                  "index_type": "HNSW",
+                  "index_params": {
+                      "metric_type": "InnerProduct",
+                      "ncentroids": 2048,
+                      "nsubvector": 32,
+                      "nlinks": 32,
+                      "efConstruction": 40,
+                      "nprobe": 80,
+                      "efSearch": 64,
+                      "training_threshold": 70000
+                  }
+              }
+          },
+          "status": "green",
+          "partitions": [
+              {
+                  "pid": 4,
+                  "replica_num": 1,
+                  "status": 4,
+                  "color": "green",
+                  "ip": "11.3.240.73",
+                  "node_id": 1,
+                  "index_status": 0,
+                  "index_num": 0,
+                  "max_docid": -1
+              }
+          ],
+      }
+  }
+
+查看表更多详细信息
+::
+  
+  curl -XGET http://master_server/dbs/$db_name/spaces/$space_name?detail=true
+
+返回值格式如下:
+::
+
+  {
+      "code": 200,
+      "msg": "success",
+      "data": {
+          "space_name": "ts_space",
+          "db_name": "ts_db",
+          "doc_num": 0,
+          "partition_num": 1,
+          "replica_num": 1,
+          "schema": {
+              "fields": {
+                  "field_string": {
+                      "type": "keyword"
+                  },
+                  "field_int": {
+                      "type": "integer"
+                  },
+                  "field_float": {
+                      "type": "float",
+                      "index": true
+                  },
+                  "field_string_array": {
+                      "type": "string",
+                      "array": true,
+                      "index": true
+                  },
+                  "field_int_index": {
+                      "type": "integer",
+                      "index": true
+                  },
+                  "field_vector": {
+                      "type": "vector",
+                      "dimension": 128
+                  },
+                  "field_vector_normal": {
+                      "type": "vector",
+                      "dimension": 256,
+                      "format": "normalization"
+                  }
+              },
+              "index": {
+                  "index_name": "gamma",
+                  "index_type": "HNSW",
+                  "index_params": {
+                      "metric_type": "InnerProduct",
+                      "ncentroids": 2048,
+                      "nsubvector": 32,
+                      "nlinks": 32,
+                      "efConstruction": 40,
+                      "nprobe": 80,
+                      "efSearch": 64,
+                      "training_threshold": 70000
+                  }
+              }
+          },
+          "status": "green",
+          "partitions": [
+              {
+                  "pid": 137,
+                  "replica_num": 1,
+                  "path": "/home/zc/program/vearch/deploy/export/Data/datas/",
+                  "status": 4,
+                  "color": "green",
+                  "ip": "11.3.240.73",
+                  "node_id": 1,
+                  "raft_status": {
+                      "ID": 137,
+                      "NodeID": 1,
+                      "Leader": 1,
+                      "Term": 1,
+                      "Index": 1,
+                      "Commit": 1,
+                      "Applied": 1,
+                      "Vote": 1,
+                      "PendQueue": 0,
+                      "RecvQueue": 0,
+                      "AppQueue": 0,
+                      "Stopped": false,
+                      "RestoringSnapshot": false,
+                      "State": "StateLeader",
+                      "Replicas": {
+                          "1": {
+                              "Match": 1,
+                              "Commit": 1,
+                              "Next": 2,
+                              "State": "ReplicaStateProbe",
+                              "Snapshoting": false,
+                              "Paused": false,
+                              "Active": true,
+                              "LastActive": "2024-03-18T09: 59: 17.095112556+08: 00",
+                              "Inflight": 0
+                          }
+                      }
+                  },
+                  "index_status": 0,
+                  "index_num": 0,
+                  "max_docid": -1
+              }
+          ]
+      }
+  }
 
 删除表空间
 --------
