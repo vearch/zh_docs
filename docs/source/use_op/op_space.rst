@@ -408,7 +408,7 @@ Gamma引擎支持标量索引，提供对标量数据的过滤功能，开启方
                   "replica_num": 1,
                   "status": 4,
                   "color": "green",
-                  "ip": "11.3.240.73",
+                  "ip": "127.0.0.1",
                   "node_id": 1,
                   "index_status": 0,
                   "index_num": 0,
