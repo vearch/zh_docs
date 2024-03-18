@@ -489,7 +489,7 @@ Gamma引擎支持标量索引，提供对标量数据的过滤功能，开启方
                   "path": "/home/zc/program/vearch/deploy/export/Data/datas/",
                   "status": 4,
                   "color": "green",
-                  "ip": "11.3.240.73",
+                  "ip": "127.0.0.1",
                   "node_id": 1,
                   "raft_status": {
                       "ID": 137,
