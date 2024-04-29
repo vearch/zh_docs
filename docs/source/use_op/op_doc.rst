@@ -7,7 +7,8 @@ _id 是服务端生成的记录唯一标识，可以由用户指定，对数据�
 $id 是插入数据时使用指定的值替换服务端生成的唯一标识，$id值不能使用url路径等特殊字符。若库中已存在该唯一标识的记录则更新覆盖。
 
 插入 upsert接口
---------
+----------------
+
 如果设置了主键_id，则将使用指定的主键。 如果未设置，则由 Vearch 生成。 
 
 如果插入时指定的_id已经存在，则更新现有数据； 否则，它将被插入。
@@ -80,8 +81,9 @@ field_vector是向量字段，其它字段为标量字段。所有字段名、�
     ' http://router_server/document/upsert
 
 
-upsert接口返回值格式如下:
+upsert接口返回值格式如下
 ::
+
     {
         "code": 0,
         "msg": "success",
@@ -104,7 +106,8 @@ upsert接口返回值格式如下:
 total 标识插入成功的数量，document_ids返回生成的_id和插入结果信息。
 
 精确查找 query接口
---------
+------------------------
+
 /document/query 接口用于精确查找与查询条件完全匹配的数据，查找时不可包含向量数据。
 
 支持两种方式：一种是直接通过主键获取文档，另一种是根据过滤条件获取对应的文档。 
@@ -132,7 +135,7 @@ query 接口参数说明:
 | limit        | int        | 否       | 指定返回结果数量,默认50                                             |
 +--------------+------------+----------+---------------------------------------------------------------------+
 
-- filter json结构说明:
+- filter json结构说明
 ::
 
     "filters": [
@@ -265,7 +268,8 @@ query接口返回格式
     }
 
 模糊查询 search接口
---------
+------------------------
+
 根据向量数值进行相似度检索，返回指定的 limit 个最相似的 Document。
 
 参数说明:
@@ -322,9 +326,9 @@ index_params 参数指定索引计算时的参数，不同索引支持的参数�
 
 - efSearch: 图遍历的距离。
 
-IVFPQ:
+IVFPQ
 ::
-  
+
     "index_params": {
         "parallel_on_queries": 1,
         "recall_num" : 100,
@@ -334,22 +338,24 @@ IVFPQ:
 
     当设置recall_num会用原始向量做计算重排（精排）
 
-GPU:
+GPU
 ::
+
     "index_params": {
         "recall_num" : 100,
         "nprobe": 80,
         "metric_type": "L2"
     }
 
-HNSW:
+HNSW
 ::
+
     "index_params": {
         "efSearch": 64,
         "metric_type": "L2"
     }
 
-IVFFLAT:
+IVFFLAT
 ::
 
     "index_params": {
@@ -358,7 +364,7 @@ IVFFLAT:
         "metric_type": "L2"
     }
 
-FLAT:
+FLAT
 ::
 
     "index_params": {
@@ -517,7 +523,8 @@ search接口返回格式
 
 
 删除 delete接口
---------
+------------------------
+
 删除支持两种方法：指定document_ids和过滤条件。
 
 删除指定document_ids
