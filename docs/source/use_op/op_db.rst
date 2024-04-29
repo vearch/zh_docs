@@ -19,7 +19,7 @@ http://master_server代表master服务，$db_name是创建的库名
   curl -XPOST http://master_server/dbs/$db_name
 
 
-查看库
+查看指定库
 --------
 
 ::
