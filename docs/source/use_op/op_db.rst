@@ -43,5 +43,3 @@ http://master_server代表master服务，$db_name是创建的库名
 ::
 
   curl -XGET http://master_server/dbs/$db_name/spaces
-
-
