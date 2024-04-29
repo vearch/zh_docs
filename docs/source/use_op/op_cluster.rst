@@ -8,7 +8,7 @@ http://master_server代表master服务
 
 ::
 
-  curl -XGET http://master_server/_cluster/stats
+  curl -XGET http://master_server/cluster/stats
 
 
 健康状态
@@ -16,18 +16,24 @@ http://master_server代表master服务
 
 ::
 
-  curl -XGET http://master_server/_cluster/health
+  curl -XGET http://master_server/cluster/health
   
-查看集群状态及库、表记录数据量(doc_num)。
+查看集群状态及库
 
 
-端口状态
+server状态
 --------
 
 ::
 
-  curl -XGET http://master_server/list/server
-   
+  curl -XGET http://master_server/servers
+
+partition状态
+--------
+
+::
+
+  curl -XGET http://master_server/partitions
 
 清除锁
 --------
@@ -45,7 +51,7 @@ http://master_server代表master服务
 
   curl -XPOST -H "content-type: application/json"  -d'
   {
-      "partition_id":1,
+      "partition_ids": [1],
       "node_id": 1,
       "method": 0
   }
