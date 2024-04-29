@@ -29,7 +29,7 @@ server状态
   curl -XGET http://master_server/servers
 
 partition状态
---------
+----------------
 
 ::
 
