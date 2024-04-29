@@ -543,7 +543,7 @@ data字段详细信息
                         }
                     }
                 ]
-                },
+            },
             "status": "green",
             "partitions": [
                 {
