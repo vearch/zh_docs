@@ -38,10 +38,8 @@ http://master_server代表master服务，$db_name是创建的库名
 
 
 查看指定库下所有表空间
---------
+------------------------
 
 ::
 
   curl -XGET http://master_server/dbs/$db_name/spaces
-
-
