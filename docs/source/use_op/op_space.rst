@@ -674,7 +674,7 @@ data字段详细信息
     }
 
 删除表空间
---------
+----------------
 ::
  
   curl -XDELETE http://master_server/dbs/$db_name/spaces/$space_name
