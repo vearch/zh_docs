@@ -1,14 +1,14 @@
 库操作
 =================
 
-http://master_server代表master服务，$db_name是创建的库名
+http://${VEARCH_URL}代表vearch服务, $db_name是创建的库名
 
 查看集群中所有库
 --------
 
 ::
 
-  curl -XGET http://master_server/dbs
+  curl -XGET http://${VEARCH_URL}/dbs
  
 
 创建库
@@ -16,7 +16,7 @@ http://master_server代表master服务，$db_name是创建的库名
 
 ::
 
-  curl -XPOST http://master_server/dbs/$db_name
+  curl -XPOST http://${VEARCH_URL}/dbs/$db_name
 
 
 查看指定库
@@ -24,7 +24,7 @@ http://master_server代表master服务，$db_name是创建的库名
 
 ::
 
-  curl -XGET http://master_server/dbs/$db_name
+  curl -XGET http://${VEARCH_URL}/dbs/$db_name
 
 
 删除库
@@ -32,7 +32,7 @@ http://master_server代表master服务，$db_name是创建的库名
 
 ::
 
-  curl -XDELETE http://master_server/dbs/$db_name
+  curl -XDELETE http://${VEARCH_URL}/dbs/$db_name
 
 若库下存在表空间则无法删除
 
@@ -42,4 +42,4 @@ http://master_server代表master服务，$db_name是创建的库名
 
 ::
 
-  curl -XGET http://master_server/dbs/$db_name/spaces
+  curl -XGET http://${VEARCH_URL}/dbs/$db_name/spaces
