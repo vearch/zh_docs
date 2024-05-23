@@ -194,7 +194,7 @@ conditions 格式说明:
     {
         "db_name": "ts_db",
         "space_name": "ts_space",
-        "document_ids": ["6560995651113580768", "-5621139761924822824", "-104688682735192253"]
+        "document_ids": ["6560995651113580768", "-5621139761924822824", "-104688682735192253"],
         "vector_value": true
     }
     ' http://${VEARCH_URL}/document/query
@@ -224,12 +224,12 @@ conditions 格式说明:
             "conditions": [
                 {
                     "field": "field_int",
-                    "operator": >=,
+                    "operator": ">=",
                     "value": 1
                 },
                 {
                     "field": "field_int",
-                    "operator": <=,
+                    "operator": "<=",
                     "value": 3
                 }
             ]
@@ -375,10 +375,10 @@ FLAT
 ::
 
     "vectors": [{
-                "field": "field_name",
-                "feature": [0.1, 0.2, 0.3, 0.4, 0.5],
-                "min_score": 0.9
-            }]
+        "field": "field_name",
+        "feature": [0.1, 0.2, 0.3, 0.4, 0.5],
+        "min_score": 0.9
+    }]
 
 
 (1) vector 支持多个(对应定义表结构时包含多个特征字段)。

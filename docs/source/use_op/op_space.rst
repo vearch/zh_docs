@@ -98,7 +98,7 @@ index配置:
 | params   | 索引参数配置 | json   | 否       |      |
 +----------+--------------+--------+----------+------+
 
-1、index type 索引类型, 目前支持二大类共七种类型, 标量索引：SCALAR；向量索引：IVFPQ, HNSW, GPU, IVFFLAT, BINARYIVF, FLAT, 详细可看链接
+1、index type 索引类型, 目前支持二大类共七种类型, 标量索引: SCALAR; 向量索引: IVFPQ, HNSW, GPU, IVFFLAT, BINARYIVF, FLAT, 详细可看链接
 https://github.com/vearch/vearch/wiki/Vearch%E7%B4%A2%E5%BC%95%E4%BB%8B%E7%BB%8D%E5%92%8C%E5%8F%82%E6%95%B0%E9%80%89%E6%8B%A9 。
 
 标量索引只需设置name和type即可。
@@ -111,7 +111,7 @@ IVFPQ可以与HNSW和OPQ组合使用。 如果要使用HNSW, 建议将ncentroids
 训练占用的内存为 2 * training_threshold * dimension * sizeof(float), 因此对于HNSW和OPQ的组合使用, 
 训练将占用更多的内存并花费较长时间, 故要特别注意training_threshold的设置, 防止使用的太多内存。
 
-training_threshold：对于IVFPQ, 在建立索引之前需要训练, 因此需要将training_threshold设置为合适的值,
+training_threshold: 对于IVFPQ, 在建立索引之前需要训练, 因此需要将training_threshold设置为合适的值,
 training_threshold可以是 ncentroids * 39 到 ncentroids * 256 之间的值。
 
 如何组合使用HNSW和OPQ由params控制。如果同时设置HNSW和OPQ, 则将使用OPQ + IVF + HNSW + PQ, 
@@ -145,7 +145,7 @@ training_threshold可以是 ncentroids * 39 到 ncentroids * 256 之间的值。
       "nsubvector": 64
   }
 
-您可以这样设置hnsw或opq：
+您可以这样设置hnsw或opq: 
 
 ::
 
@@ -237,7 +237,7 @@ SCANN(针对SCANN编译版本):
       "thread_num": 8
   }
 
-  注意: 1、目前scann模型, 索引不支持dump/load；不支持update。
+  注意: 1、目前scann模型, 索引不支持dump/load; 不支持update。
 
 IVFFLAT:
 
@@ -328,16 +328,16 @@ fields配置:
 
 5、dimension 定义type是vector的字段, 指定特征维数大小。
 
-6、store_type 特征向量存储类型, 有以下几个选项：
+6、store_type 特征向量存储类型, 有以下几个选项: 
 
-"MemoryOnly"：原始向量都存储在内存中, 存储数量的多少受内存限制, 适用于数据量不大(千万级), 对性能要求高的场景
+"MemoryOnly": 原始向量都存储在内存中, 存储数量的多少受内存限制, 适用于数据量不大(千万级), 对性能要求高的场景
 
-"RocksDB"：原始向量存储在RockDB(磁盘)中, 存储数量受磁盘大小限制, 适用单机数据量巨大(亿级以上), 对性能要求不高的场景
+"RocksDB": 原始向量存储在RockDB(磁盘)中, 存储数量受磁盘大小限制, 适用单机数据量巨大(亿级以上), 对性能要求不高的场景
 
 
 7、store_param 针对不同store_type的存储参数, 其包含以下两个子参数。
 
-cache_size: 数值类型, 单位是M bytes, 默认1024。store_type="RocksDB"时, 表示RocksDB的读缓冲大小, 值越大读向量的性能越好, 一般设置1024、2048、4096和6144即可；store_type="MemoryOnly", cache_size不生效。
+cache_size: 数值类型, 单位是M bytes, 默认1024。store_type="RocksDB"时, 表示RocksDB的读缓冲大小, 值越大读向量的性能越好, 一般设置1024、2048、4096和6144即可; store_type="MemoryOnly", cache_size不生效。
 
 
 标量索引
@@ -350,7 +350,7 @@ cache_size: 数值类型, 单位是M bytes, 默认1024。store_type="RocksDB"时
   
   curl -XGET http://${VEARCH_URL}/dbs/$db_name/spaces/$space_name
 
-返回数据详细格式：
+返回数据详细格式: 
 
 +----------+----------+--------+--------------+------+
 | 字段标识 | 字段含义 |  类型  | 是否一定返回 | 备注 |
