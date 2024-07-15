@@ -4,65 +4,65 @@
 http://${VEARCH_URL}代表master服务, $db_name是创建的库名, $space_name是创建的表空间名
 
 创建表空间
---------
+-----------
 
 ::
    
    curl -XPOST -H "content-type: application/json" -d'
-   {
-       "name": "space1",
-       "partition_num": 1,
-       "replica_num": 3,
-       "fields": [
-           {
-               "name": "field_string",
-               "type": "string"
-           },
-           {
-               "name": "field_int",
-               "type": "integer"
-           },
-           {
-               "name": "field_float",
-               "type": "float",
-               "index": {
-                   "name": "field_float",
-                   "type": "SCALAR",
-               },
-           },
-           {
-               "name": "field_string_array",
-               "type": "stringArray",
-               "index": {
-                   "name": "field_string_array",
-                   "type": "SCALAR",
-               },
-           },
-           {
-               "name": "field_int_index",
-               "type": "integer",
-               "index": {
-                   "name": "field_int_index",
-                   "type": "SCALAR",
-               },
-           },
-           {
-               "name": "field_vector",
-               "type": "vector",
-               "dimension": 128,
-               "index": {
-                   "name": "gamma",
-                   "type": "IVFPQ",
-                   "params": {
-                       "metric_type": "InnerProduct",
-                       "ncentroids": 2048,
-                       "nlinks": 32,
-                       "efConstruction": 40,
-                   },
-               },
-           }
-       ]
-   }
+    {
+        "name": "space1",
+        "partition_num": 1,
+        "replica_num": 3,
+        "fields": [
+            {
+                "name": "field_string",
+                "type": "string"
+            },
+            {
+                "name": "field_int",
+                "type": "integer"
+            },
+            {
+                "name": "field_float",
+                "type": "float",
+                "index": {
+                    "name": "field_float",
+                    "type": "SCALAR"
+                }
+            },
+            {
+                "name": "field_string_array",
+                "type": "stringArray",
+                "index": {
+                    "name": "field_string_array",
+                    "type": "SCALAR"
+                }
+            },
+            {
+                "name": "field_int_index",
+                "type": "integer",
+                "index": {
+                    "name": "field_int_index",
+                    "type": "SCALAR"
+                }
+            },
+            {
+                "name": "field_vector",
+                "type": "vector",
+                "dimension": 128,
+                "index": {
+                    "name": "gamma",
+                    "type": "IVFPQ",
+                    "params": {
+                        "metric_type": "InnerProduct",
+                        "ncentroids": 2048,
+                        "nlinks": 32,
+                        "efConstruction": 40
+                    }
+                }
+            }
+        ]
+    }
    ' http://${VEARCH_URL}/dbs/$db_name/spaces
 
 
@@ -344,8 +344,150 @@ cache_size: 数值类型, 单位是M bytes, 默认1024。store_type="RocksDB"时
 
 标量索引提供对标量数据的过滤功能, 开启方式参考“fields配置”中的第2条和第3条, 检索方式参考“查询”中的“filter json结构说明”
 
+
+自定义表空间分片规则
+>>>>>>>>>>>>>>>>>>>>>>
+
+创建表空间时指定自定义分片规则：
+
+::
+   
+   curl -XPOST -H "content-type: application/json" -u "root:secret" -d'
+    {
+        "name": "space1",
+        "partition_num": 1,
+        "replica_num": 1,
+        "fields": [
+            {
+                "name": "field_string",
+                "type": "string"
+            },
+            {
+                "name": "field_int",
+                "type": "integer"
+            },
+            {
+                "name": "field_float",
+                "type": "float",
+                "index": {
+                    "name": "field_float",
+                    "type": "SCALAR"
+                }
+            },
+            {
+                "name": "field_string_array",
+                "type": "stringArray",
+                "index": {
+                    "name": "field_string_array",
+                    "type": "SCALAR"
+                }
+            },
+            {
+                "name": "field_int_index",
+                "type": "integer",
+                "index": {
+                    "name": "field_int_index",
+                    "type": "SCALAR"
+                }
+            },
+            {
+                "name": "field_date",
+                "type": "date",
+                "index": {
+                    "name": "field_date",
+                    "type": "SCALAR"
+                }
+            },
+            {
+                "name": "field_vector",
+                "type": "vector",
+                "dimension": 128,
+                "index": {
+                    "name": "gamma",
+                    "type": "IVFPQ",
+                    "params": {
+                        "metric_type": "InnerProduct",
+                        "ncentroids": 2048,
+                        "nlinks": 32,
+                        "efConstruction": 40
+                    }
+                }
+            }
+        ],
+        "partition_rule": {
+            "type": "RANGE",
+            "field": "field_date",
+            "ranges": [
+                {
+                    "name": "p0",
+                    "value": "2024-07-15"
+                },
+                {
+                    "name": "p1",
+                    "value": "2024-07-16"
+                },
+                {
+                    "name": "p2",
+                    "value": "2024-07-17"
+                }
+            ]
+        }
+    }
+   ' http://${VEARCH_URL}/dbs/$db_name/spaces
+
+partition rule详细格式: 
+
++----------+----------------+--------+----------+-------------------------------------------------------------------------------------------------------------------------+
+| 字段标识 |    字段含义    |  类型  | 是否必须 |                                                          备注                                                           |
++==========+================+========+==========+=========================================================================================================================+
+| type     | 自定义分片类型 | string | 是       | 目前只支持 RANGE                                                                                                        |
++----------+----------------+--------+----------+-------------------------------------------------------------------------------------------------------------------------+
+| field    | 自定义分片字段 | string | 是       | 需要是fields里面的字段，目前只支持date类型，和_id组成共同主键，即_id相同但是partition field对应的值不同是两条不同的数据 |
++----------+----------------+--------+----------+-------------------------------------------------------------------------------------------------------------------------+
+| ranges   | 自定义分片范围 | json   | 是       | 每个分片field值对应的范围,name为分片组的名称，value是对应的值的阈值且需要是递增的                                       |
++----------+----------------+--------+----------+-------------------------------------------------------------------------------------------------------------------------+
+
+每个range会对应一个分片组，分片组的分片数量为partition_num，即设置了partition rule的表空间总共会有 len(ranges) * partition_num 个分片。
+
+删除分片组
+>>>>>>>>>>>>
+
+::
+   
+   curl -XPUT -H "content-type: application/json" -d'
+    {
+        "partition_name": "p0",
+        "operator_type": "DROP"
+    }
+   ' http://${VEARCH_URL}/dbs/$db_name/spaces/$space_name
+
+
+添加分片组
+>>>>>>>>>>>>
+
+::
+   
+   curl -XPUT -H "content-type: application/json" -d'
+    {
+        "operator_type": "ADD",
+        "partition_rule": {
+            "type": "RANGE",
+            "ranges": [
+                {
+                    "name": "p3",
+                    "value": "2024-07-18"
+                },
+                {
+                    "name": "p4",
+                    "value": "2024-07-19"
+                }
+            ]
+        }
+    }
+   ' http://${VEARCH_URL}/dbs/$db_name/spaces/$space_name
+
 查看表空间
---------
+------------
 ::
   
   curl -XGET http://${VEARCH_URL}/dbs/$db_name/spaces/$space_name
