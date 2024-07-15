@@ -114,9 +114,6 @@ total 标识插入成功的数量, document_ids返回生成的_id和插入结果
 
 如果直接通过document_ids获取文档时设置了partition_id, 则获取指定数据分区上对应的文档。 此时document_id的含义就是该分区上的文档编号。
 
-document_id可以是指定分区的[0, max_docid], max_docid和partition_id信息可以通过 http://master_server/dbs/$db_name/spaces/$space_name 接口获取。 
-可以通过这种方式获取集群的完整数据。
-
 query 接口参数说明:
 
 +--------------+------------+----------+---------------------------------------------------------------------+
@@ -199,7 +196,14 @@ conditions 格式说明:
     }
     ' http://${VEARCH_URL}/document/query
 
+全量数据获取
+>>>>>>>>>>>>>>>>
+
 获取指定数据分区上对应的文档, 此时document_id可以是指定分区的[0, max_docid]
+
+max_docid和partition_id信息可以通过 http://master_server/dbs/$db_name/spaces/$space_name 接口获取。
+
+可以通过这种方式遍历space的所有partition来获取集群的完整数据。
 ::
 
     curl -H "content-type: application/json" -XPOST -d'
