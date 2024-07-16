@@ -9,42 +9,49 @@ vearch可以将集群表空间备份远程存储, 以便于迁移或者恢复, �
 ----------------
 
 ::
-    curl --location 'http://${VEARCH_URL}/backup/dbs/${DB_NAME}/spaces/${SPACE_NAME}' \
-    --data '{
-        "command": "create",
-        "with_schema": true,
-        "s3_param": {
-            "access_key": "USER_ACCESS_KEY",
-            "bucket_name": "USER_BUCKET_NAME",
-            "endpoint": "S3_ENDPOINT",
-            "secret_key": "USER_SECRET",
-            "use_ssl": true
-        }
-    }'
+
+  curl --location 'http://${VEARCH_URL}/backup/dbs/${DB_NAME}/spaces/${SPACE_NAME}' \
+  --data '{
+      "command": "create",
+      "with_schema": true,
+      "s3_param": {
+          "access_key": "USER_ACCESS_KEY",
+          "bucket_name": "USER_BUCKET_NAME",
+          "endpoint": "S3_ENDPOINT",
+          "secret_key": "USER_SECRET",
+          "use_ssl": true
+      }
+  }'
 
 with_schema: 设置是否备份表信息, 默认为true, 如果设置为true, 则备份表信息, 否则只备份数据
+
 access_key: S3存储的access key
+
 bucket_name: S3存储的bucket名称
+
 endpoint: S3存储的endpoint
+
 secret_key: S3存储的secret key
+
 use_ssl: 是否使用ssl
 
 恢复
 ----------------
 
 ::
-    curl --location 'http://${VEARCH_URL}/backup/dbs/${DB_NAME}/spaces/${SPACE_NAME}' \
-    --data '{
-        "command": "restore",
-        "with_schema": true,
-        "s3_param": {
-            "access_key": "USER_ACCESS_KEY",
-            "bucket_name": "USER_BUCKET_NAME",
-            "endpoint": "S3_ENDPOINT",
-            "secret_key": "USER_SECRET",
-            "use_ssl": true
-        }
-    }'
+
+  curl --location 'http://${VEARCH_URL}/backup/dbs/${DB_NAME}/spaces/${SPACE_NAME}' \
+  --data '{
+      "command": "restore",
+      "with_schema": true,
+      "s3_param": {
+          "access_key": "USER_ACCESS_KEY",
+          "bucket_name": "USER_BUCKET_NAME",
+          "endpoint": "S3_ENDPOINT",
+          "secret_key": "USER_SECRET",
+          "use_ssl": true
+      }
+  }'
 
 
 集群数据迁移
