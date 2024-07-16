@@ -18,6 +18,7 @@ Vearch 系统介绍
    use_op/op_alias.rst
    use_op/op_doc.rst
    use_op/op_auth.rst
+   use_op/op_backup_migrate.rst
 
 .. toctree::
       :maxdepth: 2
