@@ -53,6 +53,23 @@ use_ssl: 是否使用ssl
       }
   }'
 
+副本扩缩和分片迁移
+----------------
+
+::
+
+  curl -XPOST -H "content-type: application/json"  -d'
+  {
+      "partition_ids": [1],
+      "node_id": 1,
+      "method": 0
+  }
+  ' http://${VEARCH_URL}/partitions/change_member
+
+method=0: node id 1上添加分片id 1 的副本; method=1: 删除 node id 1 上 分片 id 1 的副本。
+
+通过在新节点上新增分片的副本然后删除之前的分片实现分片迁移
+
 
 集群数据迁移
 --------
