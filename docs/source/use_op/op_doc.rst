@@ -401,7 +401,7 @@ FLAT
 
 - vector_value 为了减小网络开销, 搜索结果中默认不包含特征数据只包含标量信息字段, 设置成true指定返回结果中包含原始特征数据。
 
-- load_balance leader, random, no_leader, least_connection, 默认random。leader仅从主数据节点查询, random: 从ps主从节点随机选择, no_leader:只查询从节点, least_connection: 最少连接数。
+- load_balance leader, random, not_leader, least_connection, 默认random。leader仅从主数据节点查询, random: 从ps主从节点随机选择, not_leader:只查询从节点, least_connection: 最少连接数。
 
 - limit 指定最多返回的结果数量。若请求url中设置了limit值, 优先使用url中指定的limit值。
 
