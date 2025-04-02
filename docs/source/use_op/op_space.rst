@@ -304,11 +304,11 @@ FLAT:
 
 fields配置:
 
-1、表空间结构定义字段支持的类型(即type的值)有7种: string(keyword), stringArray, integer,  long,  float, double,  vector。
+1、表空间结构定义字段支持的类型(即type的值)有8种: string(keyword), stringArray, integer,  long,  float, double,  date, vector。
 
 2、string类型或者stringArray字段支持index属性, index定义是否创建索引, 创建索引后支持term过滤。
 
-3、integer, long, float, double类型的字段支持index属性, index设为true创建索引后支持数值范围过滤查询(range)。
+3、integer, long, float, double, date类型的字段支持index属性, index设置创建索引后支持数值范围过滤查询(range)。
 
 4、vector 类型字段为特征字段, 一个表空间中支持多个特征字段, vector类型的字段支持的属性如下:
 
