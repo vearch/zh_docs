@@ -103,7 +103,24 @@ upsert接口返回值格式如下
         }
     }
 
-total 标识插入成功的数量, document_ids返回生成的_id和插入结果信息。
+upsert接口插入失败返回值格式如下
+::
+
+    {
+        "code": 0,
+        "request_id": "NzA2MTg5N2",
+        "data": {
+            "document_ids": [{
+            "_id": "00001",
+            "code": 404,
+            "msg": "internal_error:add doc failed, err code -3"
+            }],
+            "total": 0
+        }
+    }
+
+total 标识插入成功的数量, document_ids返回生成的_id和插入结果信息, 注意插入中可以有部分失败的情况, 
+检查插入是否成功最好是检查total和要插入的数据条数是否一致, 可能出现code为0但是插入失败的情况。
 
 精确查找 query接口
 ------------------------
@@ -391,7 +408,7 @@ FLAT
 
 (3) feature 传递特征, 维数和定义表结构时维数必须相同。
 
-(4) min_score 指定返回结果中分值必须大于等于0.9, min_score可以指定返回结果分值最小值, max_score可以指定最大值。如设置:  “min_score”: 0.8, “max_score”: 0.95  代表过滤0.8<= 分值<= 0.95 的结果。同时另外一种分值过滤的方式是使用: "symbol":">=", "value":0.9 这种组合方式, symbol支持的值类型包含: > 、 >= 、 <、 <=  4种, value及min_score、max_score值在0到1之间。
+(4) min_score 指定返回结果中分值必须大于等于0.9, min_score可以指定返回结果分值最小值, max_score可以指定最大值。如设置:  “min_score”: 0.8, “max_score”: 0.95  代表过滤0.8<= 分值<= 0.95 的结果。同时另外一种分值过滤的方式是使用: "symbol":">=", "value":0.9 这种组合方式, symbol支持的值类型包含: > 、 >= 、 <、 <=  4种。
 
 - filter json结构说明:
 
