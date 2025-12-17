@@ -99,7 +99,7 @@ index配置:
 | params   | 索引参数配置 | json   | 否       |      |
 +----------+--------------+--------+----------+------+
 
-1、index type 索引类型, 目前支持二大类共七种类型, 标量索引: SCALAR; 向量索引: IVFPQ, HNSW, GPU, IVFFLAT, BINARYIVF, FLAT, 详细可看链接
+1、index type 索引类型, 目前支持二大类共七种类型, 标量索引: SCALAR; 向量索引: IVFPQ, HNSW, GPU_IVFPQ, GPU_IVFFLAT, IVFFLAT, BINARYIVF, FLAT, 详细可看链接
 https://github.com/vearch/vearch/wiki/Vearch%E7%B4%A2%E5%BC%95%E4%BB%8B%E7%BB%8D%E5%92%8C%E5%8F%82%E6%95%B0%E9%80%89%E6%8B%A9 。
 
 标量索引只需设置name和type即可。
@@ -119,7 +119,7 @@ training_threshold可以是 ncentroids * 39 到 ncentroids * 256 之间的值。
 training_threshold通常建议是 ncentroids * 200。training_threshold 会明显影响索引构建的效果，明显影响
 检索速度和召回。
 
-ncentroids 和 training_threshold的设置同样对IVF系列其他索引适用，如IVFFLAT，GPU_IVFP，、GPU_IVFFLAT。
+ncentroids 和 training_threshold的设置同样对IVF系列其他索引适用，如IVFFLAT，GPU_IVFPQ，、GPU_IVFFLAT。
 
 如何组合使用HNSW和OPQ由params控制。如果同时设置HNSW和OPQ, 则将使用OPQ + IVF + HNSW + PQ, 
 建议将OPQ的nsubvector设置为与PQ的nsubvector相同。如果只想使用IVF + HNSW + PQ, 
