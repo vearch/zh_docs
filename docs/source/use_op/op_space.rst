@@ -192,6 +192,7 @@ HNSW:
   }
 
   注意: 1、向量存储只支持MemoryOnly
+  注意: 2、HNSW如果使用InnerProduct，强烈建议对向量进行归一化处理
 
 GPU_IVFPQ(针对GPU编译版本):
 
