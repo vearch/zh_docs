@@ -111,8 +111,14 @@ IVFPQ可以与HNSW和OPQ组合使用。 如果要使用HNSW, 建议将ncentroids
 训练占用的内存为 2 * training_threshold * dimension * sizeof(float), 因此对于HNSW和OPQ的组合使用, 
 训练将占用更多的内存并花费较长时间, 故要特别注意training_threshold的设置, 防止使用的太多内存。
 
+ncentroids 根据经验，通常设置为单个分片数据量 ^ 0.5 * 4。注意是单个分片的数据量，不是整个space的数据量。
+
 training_threshold: 对于IVFPQ, 在建立索引之前需要训练, 因此需要将training_threshold设置为合适的值,
 training_threshold可以是 ncentroids * 39 到 ncentroids * 256 之间的值。
+training_threshold通常建议是 ncentroids * 200。training_threshold 会明显影响索引构建的效果，明显影响
+检索速度和召回。
+
+ncentroids 和 training_threshold的设置同样对IVF系列其他索引适用，如IVFFLAT，GPU_IVFP，、GPU_IVFFLAT。
 
 如何组合使用HNSW和OPQ由params控制。如果同时设置HNSW和OPQ, 则将使用OPQ + IVF + HNSW + PQ, 
 建议将OPQ的nsubvector设置为与PQ的nsubvector相同。如果只想使用IVF + HNSW + PQ, 
