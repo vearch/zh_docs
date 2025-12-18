@@ -21,6 +21,12 @@ http://${VEARCH_URL}代表vearch服务
 查看集群状态及库
 
 
+::
+
+  curl -XGET http://${VEARCH_URL}/cluster/health?db=$db_name&space=$space_name&detail=true
+
+查看集群状态并且指定库和表空间
+
 server状态
 --------
 

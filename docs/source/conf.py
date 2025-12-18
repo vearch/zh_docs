@@ -39,6 +39,7 @@ release = '0.1'
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx_copybutton'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -98,6 +99,12 @@ html_theme = 'sphinx_rtd_theme'
 # html_sidebars = {}
 
 
+# Custom CSS files
+#html_css_files = [
+#    'custom.css',
+#]
+
+
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
@@ -151,3 +158,7 @@ epub_exclude_files = ['search.html']
 
 
 # -- Extension configuration -------------------------------------------------
+
+# sphinx-copybutton configuration
+# Make copy button always visible instead of only on hover
+copybutton_visibility = "visible"
