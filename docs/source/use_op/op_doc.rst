@@ -149,6 +149,9 @@ query 接口参数说明:
 | limit        | int        | 否       | 指定返回结果数量,默认50                                             |
 +--------------+------------+----------+---------------------------------------------------------------------+
 
+过滤查询
+>>>>>>>>>>>>>>>>
+
 - filter json结构说明
 ::
 
@@ -201,6 +204,62 @@ conditions 格式说明:
 (2) conditions 具体过滤条件, 目前支持两类字段类型过滤, 数值类型和字符串类型(包括字符串数组类型)
 数值类型操作符: >, >=, <, <= ; 字符串操作符类型 IN, NOT IN。
 
+数值类型过滤查询
+:::::::::::::::::::::
+
+- 字段范围过滤示例，如果value相同即实现等于=
+::
+
+    "filters": {
+        "operator": "AND",
+        "conditions": [
+            {
+                "field": "field_int",
+                "operator": ">=",
+                "value": 1
+            },
+            {
+                "field": "field_int",
+                "operator": "<=",
+                "value": 3
+            }
+        ]
+    }
+
+- 字段范围过滤示例，只设置单个条件
+::
+
+    "filters": {
+        "operator": "AND",
+        "conditions": [
+            {
+                "field": "field_int",
+                "operator": ">=",
+                "value": 1
+            }
+        ]
+    }
+
+字符串类型过滤查询
+:::::::::::::::::::::
+
+- filter json结构示例
+::
+
+    "filters": {
+        "operator": "AND",
+        "conditions": [
+            {
+                "field": "field_string",
+                "operator": "IN",
+                "value": ["aaa", "bbb"]
+            }
+        ]
+    }
+
+根据id查询
+>>>>>>>>>>>>>>>>
+
 根据唯一id标识查找数据
 ::
 
@@ -230,31 +289,6 @@ max_docid和partition_id信息可以通过 http://master_server/dbs/$db_name/spa
         "document_ids": ["0", "1", "2"],
         "partition_id": 1,
         "vector_value": true
-    }
-    ' http://${VEARCH_URL}/document/query
-
-根据自定义的标量字段的 Filter 表达式查找
-::
-
-    curl -H "content-type: application/json" -XPOST -d'
-    {
-        "db_name": "ts_db",
-        "space_name": "ts_space",
-        "filters": {
-            "operator": "AND",
-            "conditions": [
-                {
-                    "field": "field_int",
-                    "operator": ">=",
-                    "value": 1
-                },
-                {
-                    "field": "field_int",
-                    "operator": "<=",
-                    "value": 3
-                }
-            ]
-        }
     }
     ' http://${VEARCH_URL}/document/query
 
