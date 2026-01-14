@@ -470,9 +470,6 @@ FLAT
                 "feature": [0.1, 0.2, 0.3]
             }
         ],
-        "index_params": {
-            "metric_type": "L2"
-        },
         "limit": 3,
         "db_name": "ts_db",
         "space_name": "ts_space"
@@ -515,9 +512,6 @@ FLAT
                     ]
                 }
             ]
-        },
-        "index_params": {
-            "metric_type": "L2"
         },
         "limit": 3,
         "db_name": "ts_db",
