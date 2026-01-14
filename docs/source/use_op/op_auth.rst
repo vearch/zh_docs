@@ -3,6 +3,19 @@
 
 http://${VEARCH_URL}代表vearch服务
 
+接口认证
+---------------
+当前支持接口访问 http basic authentication
+
+用户密码方式
+::
+    curl -XGET http://集群域名 -u 'root:密码'
+
+http header方式
+::
+    AUTH=$(echo -n "root:密码" | base64)
+    curl -XGET "http://集群域名" -H "Authorization: Basic ${AUTH}"
+
 RBAC 鉴权模式
 ---------------
 
