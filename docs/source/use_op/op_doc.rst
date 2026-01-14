@@ -456,8 +456,10 @@ FLAT
 
 - limit 指定最多返回的结果数量。若请求url中设置了limit值, 优先使用url中指定的limit值。
 
-根据向量查询
-支持单条或者多条查询, 多条可以将多个查询的特征拼接成一个特征数组(比如定义128维的特征, 批量查询10条, 则将10个128维特征按顺序拼接成1280维特征数组赋值给feature字段), 后台接收到请求后按表结构定义的特征字段维度进行拆分, 按顺序返回匹配结果。
+向量查询
+:::::::::::::::::::::
+
+只根据向量进行查询，其中index_params一般不需要设置，如果需要调整性能和召回，就需要考虑设置index_params（可参考建表时索引设置的说明）：
 ::
 
     curl -H "content-type: application/json" -XPOST -d'
@@ -465,9 +467,30 @@ FLAT
         "vectors": [
             {
                 "field": "field_vector",
-                "feature": [
-                    "..."
-                ]
+                "feature": [0.1, 0.2, 0.3]
+            }
+        ],
+        "index_params": {
+            "metric_type": "L2"
+        },
+        "limit": 3,
+        "db_name": "ts_db",
+        "space_name": "ts_space"
+    }
+    ' http://${VEARCH_URL}/document/search
+
+混合查询
+:::::::::::::::::::::
+
+标量和向量混合查询
+::
+
+    curl -H "content-type: application/json" -XPOST -d'
+    {
+        "vectors": [
+            {
+                "field": "field_vector",
+                "feature": [0.1, 0.2, 0.3]
             }
         ],
         "filters": {
@@ -502,8 +525,39 @@ FLAT
     }
     ' http://${VEARCH_URL}/document/search
 
+批量查询
+:::::::::::::::::::::
 
-多向量查询
+表空间定义一个向量字段，维度为2
+::
+
+    {
+        "field_vector": {
+            "type": "vector",
+            "dimension": 2
+        }
+    }
+
+
+查询时搜索条件可以指定批量查询，可以将多个查询的特征拼接成一个特征数组。
+
+比如定义2维的特征, 批量查询2条, 则将2个2维特征按顺序拼接成4维特征数组赋值给feature字段, 
+
+后台接收到请求后按表结构定义的特征字段维度进行拆分, 按顺序返回匹配结果。
+
+如下即为批量查询两个向量:
+::
+
+    {
+        "vectors": [{
+            "field": "field_vector",
+            "feature": [0.1, 0.2, 0.3, 0.4]
+        }]
+    }
+
+多向量字段查询
+:::::::::::::::::::::
+
 表空间定义时支持多个特征字段, 因此查询时可以支持相应数据的特征进行查询。以每条记录两个向量为例: 定义表结构字段
 ::
 
@@ -540,7 +594,7 @@ field_vector1、field_vector2均为向量字段, 查询时搜索条件可以指�
 
 field1和field2过滤的结果求交集, 其他参数及请求地址和普通查询一致。 
 
-search接口返回格式
+search接口返回格式，search支持批量查询，因此返回结果为2维数组
 ::
 
     {
