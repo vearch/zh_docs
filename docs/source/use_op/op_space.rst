@@ -144,6 +144,7 @@ https://github.com/vearch/vearch/wiki/Vearch%E7%B4%A2%E5%BC%95%E4%BB%8B%E7%BB%8D
 
 IVFPQ 向量索引
 **********************
+IVF系列向量索引需要训练，因此数据量未到训练阈值之前不会开始训练和构建索引。
 
 IVFPQ可以与HNSW和OPQ组合使用。 如果要使用HNSW, 建议将ncentroids设置为较大的值。而在组合使用OPQ时, 
 训练占用的内存为 2 * training_threshold * dimension * sizeof(float), 因此对于HNSW和OPQ的组合使用, 
