@@ -191,7 +191,7 @@ ncentroids 和 training_threshold的设置同样对IVF系列其他索引适用�
       "nsubvector": 64
   }
 
-您可以这样设置hnsw或opq: 
+您可以这样组合设置hnsw，特别注意当ncentroids较大（如超过10000）才有设置的必要:
 
 ::
 
