@@ -135,7 +135,7 @@ index索引说明
 
 标量索引: SCALAR, INVERTED, BITMAP, COMPOSITE
 
-向量索引: IVFPQ, HNSW, GPU_IVFPQ, GPU_IVFFLAT, IVFFLAT, BINARYIVF, FLAT, IVFRABITQ, DISKANN_STATIC, NPU_IVFFLAT, NPU_IVFRABITQ
+向量索引: IVFPQ, HNSW, GPU_IVFPQ, GPU_IVFFLAT, IVFFLAT, BINARYIVF, FLAT, IVFRABITQ, DISKANN_STATIC, NPU_IVFRABITQ
 
 详细可看链接
 
@@ -429,7 +429,8 @@ DiskANN 是基于磁盘的图索引, 适合数据量大、内存受限的场景,
 NPU_IVFRABITQ 向量索引
 ''''''''''''''''''''''''''''''''''''
 
-基于华为昇腾 NPU 的 IVFRABITQ 索引, NPU 完成粗排, 主机侧对候选集做精排(rerank)。相比 NPU_IVFFLAT 内存占用更低。
+基于华为昇腾 NPU 的 IVFRABITQ 索引, NPU 完成粗排, 主机侧对候选集做精排(rerank)。向量经过量化后存储, 显存占用低。
+需要部署在带昇腾 NPU 卡的机器上, 并使用 NPU 版本的引擎镜像。
 
 +--------------------+--------------------------+--------+----------+-----------------------------------------------------------------------------------------------------+
 |      字段标识      |         字段含义         |  类型  | 是否必填 |                                                备注                                                 |
